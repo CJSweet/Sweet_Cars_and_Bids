@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "530495853733",
+    "firebase_url": "https://sweet-cars-and-bids.firebaseio.com",
+    "project_id": "sweet-cars-and-bids",
+    "storage_bucket": "sweet-cars-and-bids.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530495853733:android:0208d0d651b1d8449be94c",
+        "android_client_info": {
+          "package_name": "com.sweetcarsandbids.sweetcarsandbids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530495853733-8mbobm3bj6h85isqdgkq8sgu862h00s8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBpSeX2XKh3jLqhwc-8-Nu0EY1MMWBR-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platsubmit_oauth_client": [
+            {
+              "client_id": "530495853733-8mbobm3bj6h85isqdgkq8sgu862h00s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

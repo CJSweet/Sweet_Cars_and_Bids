@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/tile_image"
+            android:src="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tile_time_left"
+            android:text="5:45:08"
+            tools:text="5:45:08"
+            android:layout_gravity="bottom|start"
+            android:background="#FFFFFF"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tile_current_price"
+            android:text="$15,000"
+            tools:text="$15,000"
+            android:layout_gravity="bottom|end"
+            android:background="#FFFFFF"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"/>
+
+    </FrameLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tile_car_name"
+        tools:text="Subaru BRZ"
+        android:text="Subaru BRZ"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tile_car_descript"
+        tools:text="2016 model with 16,000 miles!"
+        android:text="16,000 miles!"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"/>
+
+</LinearLayout>

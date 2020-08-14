@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.carsandbids.submit_car.SubmitCarViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--    Title: TELL US ABOUT YOU CAR-->
+                <TextView
+                    android:id="@+id/submit_title_text"
+                    style="@style/textViewStyle.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_title_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/submit_title_descript"
+                    style="@style/textViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_title_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_title_text" />
+                <!--    Section: Your info-->
+
+                <TextView
+                    android:id="@+id/submit_your_info_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_your_info_subtitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_title_descript" />
+                <!--    Dealer or private party?-->
+                <TextView
+                    android:id="@+id/submit_who_is_selling"
+                    style="@style/textViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_who_is_selling"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_your_info_subtitle" />
+
+                <Button
+                    android:id="@+id/submit_dealer_button"
+                    style="@style/buttonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_dealer_button"
+                    app:layout_constraintEnd_toStartOf="@id/submit_private_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_who_is_selling" />
+
+                <Button
+                    android:id="@+id/submit_private_button"
+                    style="@style/buttonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_private_button"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/submit_dealer_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_dealer_button" />
+
+
+                <!--    Your name           ....        Contact Phone Number-->
+                <!--    Your name-->
+
+
+                <TextView
+                    android:id="@+id/submit_your_name_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_your_name_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_dealer_button" />
+
+                <EditText
+                    android:id="@+id/submit_name_edit"
+                    style="@style/editTextStyle"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_your_name_text" />
+
+                <!--    Contact Phone Number-->
+
+                <TextView
+                    android:id="@+id/submit_phone"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_private_button" />
+
+
+                <EditText
+                    android:id="@+id/submit_phone_edit"
+                    style="@style/editTextStyle"
+                    android:inputType="phone"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/submit_name_edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <!--    Section: Car Details-->
+
+                <TextView
+                    android:id="@+id/submit_car_details_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/submit_car_details_subtitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_name_edit" />
+
+                <!--    Is car for sale elsewhere?-->
+                <TextView
+                    android:id="@+id/submit_forsale_where"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_forsale_where"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_car_details_subtitle" />
+
+                <Button
+                    android:id="@+id/submit_yes_button"
+                    style="@style/buttonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yes"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_no_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_forsale_where" />
+
+                <Button
+                    android:id="@+id/submit_no_button"
+                    style="@style/buttonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_yes_button"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_forsale_where" />
+
+                <!--    Year (no earlier than 1980)-->
+                <TextView
+                    android:id="@+id/submit_year_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/year"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_yes_button" />
+
+                <Spinner
+                    android:id="@+id/submit_year_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_year_text"
+                    tools:listitem="@tools:sample/cities" />
+
+                <!--    Make and Model-->
+                <!--    Make-->
+                <TextView
+                    android:id="@+id/submit_make_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/make"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_year_spinner" />
+
+                <EditText
+                    android:id="@+id/submit_make_edit"
+                    style="@style/editTextStyle"
+                    android:inputType="textCapWords"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_make_text" />
+
+                <!--    Model-->
+                <TextView
+                    android:id="@+id/submit_model_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/model"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_year_spinner" />
+
+                <EditText
+                    android:id="@+id/submit_model_edit"
+                    style="@style/editTextStyle"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_model_text" />
+
+                <!--    Vin and Mileage-->
+                <!--    Vin-->
+
+                <TextView
+                    android:id="@+id/submit_vin_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_make_edit" />
+
+                <!--    Mileage-->
+                <EditText
+                    android:id="@+id/submit_vin_edit"
+                    style="@style/editTextStyle"
+                    android:inputType="textCapCharacters"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_vin_text" />
+
+                <TextView
+                    android:id="@+id/submit_mileage_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mileage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_model_edit" />
+
+                <EditText
+                    android:id="@+id/submit_mileage_edit"
+                    style="@style/editTextStyle"
+                    android:inputType="number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_mileage_text" />
+
+                <!--    Where is car located (Options of US and Canada-->
+
+                <TextView
+                    android:id="@+id/submit_car_location"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_vin_edit" />
+
+                <Button
+                    android:id="@+id/submit_us_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/united_states"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_canada_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_car_location" />
+
+                <Button
+                    android:id="@+id/submit_canada_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/canada"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/submit_us_button"
+                    app:layout_constraintTop_toBottomOf="@id/submit_car_location"
+                    tools:layout_editor_absoluteX="172dp"
+                    tools:layout_editor_absoluteY="353dp" />
+
+                <!--    Noteworthy Options/Features-->
+
+                <TextView
+                    android:id="@+id/submit_things_to_note"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_things_to_note"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_us_button" />
+
+                <EditText
+                    android:id="@+id/submit_noteworthy_edit"
+                    style="@style/editTextStyle"
+                    android:layout_width="250dp"
+                    android:layout_height="75dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_things_to_note" />
+
+                <!--    Has it been modified? (Completely Stock, or Modified)-->
+                <TextView
+                    android:id="@+id/submit_been_modified_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/has_it_been_modified"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_noteworthy_edit" />
+
+                <Button
+                    android:id="@+id/submit_stock_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/completely_stock"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_modified_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_been_modified_text" />
+
+                <Button
+                    android:id="@+id/submit_modified_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/modified"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_stock_button"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_been_modified_text" />
+
+                <!--    Section: Title Info-->
+                <TextView
+                    android:id="@+id/submit_info_title_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_stock_button" />
+
+                <!--    Where is car titled? US or CAN-->
+                <TextView
+                    android:id="@+id/submit_title_location"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car_title_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_info_title_subtitle" />
+
+                <Button
+                    android:id="@+id/submit_us_title_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/united_states"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_canada_title_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_title_location" />
+
+                <Button
+                    android:id="@+id/submit_canada_title_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/canada"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/submit_us_title_button"
+                    app:layout_constraintTop_toBottomOf="@id/submit_title_location" />
+
+                <!--    Is vehicle title in your name?-->
+                <TextView
+                    android:id="@+id/submit_title_in_whos_name"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_in_your_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_us_title_button" />
+
+                <Button
+                    android:id="@+id/submit_yes_title_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/yes"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_no_title_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_title_in_whos_name" />
+
+                <Button
+                    android:id="@+id/submit_no_title_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_yes_title_button"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_title_in_whos_name" />
+
+                <!--    is there a lienholder on the title-->
+                <TextView
+                    android:id="@+id/submit_lienholder_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit_lienholder_on_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_yes_title_button" />
+
+                <Button
+                    android:id="@+id/submit_yes_lienholder_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/yes"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_no_lienholder_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_lienholder_text" />
+
+                <Button
+                    android:id="@+id/submit_no_lienholder_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_yes_lienholder_button"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_lienholder_text" />
+
+                <!--    What is the title's status-->
+                <TextView
+                    android:id="@+id/submit_title_status_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titles_status_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_yes_lienholder_button" />
+
+                <Spinner
+                    android:id="@+id/submit_title_status_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_title_status_text"
+                    tools:listitem="@tools:sample/cities" />
+
+                <!--    Section: Reserve Price-->
+                <TextView
+                    android:id="@+id/submit_reserve_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reserve_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_title_status_spinner" />
+                <!--    Do you want a min price to sell?-->
+                <TextView
+                    android:id="@+id/submit_reserve_a_price_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ask_for_reserve_yn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_reserve_subtitle" />
+
+                <Button
+                    android:id="@+id/submit_yes_reserve_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/yes"
+                    app:layout_constraintEnd_toStartOf="@+id/submit_no_reserve_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_reserve_a_price_text" />
+
+                <Button
+                    android:id="@+id/submit_no_reserve_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/submit_yes_reserve_button"
+                    app:layout_constraintTop_toBottomOf="@+id/submit_reserve_a_price_text" />
+
+
+                <!--    Section: Photos-->
+                <TextView
+                    android:id="@+id/submit_photos_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/photos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_yes_reserve_button" />
+                <!--    8 to 16 photos can be uploaded-->
+
+                <!--    Section: Referral-->
+                <TextView
+                    android:id="@+id/submit_referral_subtitle"
+                    style="@style/textViewStyle.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/referral"
+                    android:textSize="@dimen/subtitle_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_photos_subtitle" />
+
+                <!--    How did you hear about us? If user referred, name them-->
+                <TextView
+                    android:id="@+id/submit_referral_text"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/referral_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_referral_subtitle" />
+
+                <EditText
+                    android:id="@+id/submit_referral_edit"
+                    style="@style/editTextStyle"
+                    android:layout_width="@dimen/edit_width"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/submit_referral_text" />
+
+                <!--            Submit Button-->
+                <Button
+                    android:id="@+id/submit_submit_button"
+                    style="@style/buttonStyle"
+                    android:text="@string/submit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/submit_referral_edit" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

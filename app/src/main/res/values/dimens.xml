@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin">10sp</dimen>
+    <dimen name="title_size">24sp</dimen>
+    <dimen name="subtitle_size">20sp</dimen>
+    <dimen name="edit_width">100dp</dimen>
+    <dimen name="norm_text_size">16sp</dimen>
+</resources>
