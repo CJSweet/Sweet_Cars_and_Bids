@@ -28,29 +28,29 @@
                 <!--    Title: TELL US ABOUT YOU CAR-->
                 <TextView
                     android:id="@+id/submit_title_text"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="@dimen/title_size"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:layout_marginStart="@dimen/space_ten"
-                    android:layout_marginEnd="@dimen/space_ten"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_ten"
+                    android:layout_marginEnd="@dimen/space_ten"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/submit_title_text"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/title_size"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/submit_title_descript"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/norm_text_size"
-                    android:layout_marginStart="@dimen/space_ten"
-                    android:layout_marginEnd="@dimen/space_ten"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_ten"
+                    android:layout_marginEnd="@dimen/space_ten"
+                    android:fontFamily="@font/roboto"
                     android:text="@string/submit_title_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_title_text" />
@@ -76,11 +76,11 @@
                         android:id="@+id/submit_info_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:layout_marginStart="@dimen/space_three"
+                        android:layout_marginTop="4dp"
                         android:layout_marginBottom="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
                         android:paddingStart="@dimen/space_three"
+                        android:paddingTop="@dimen/space_three"
                         android:paddingEnd="0dp"
                         android:paddingBottom="@dimen/space_three"
                         android:src="@drawable/submit_car_tab"
@@ -114,34 +114,94 @@
 
 
                     <RadioGroup
+                        android:id="@+id/submit_dealer_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_dealer_radio_group"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/submit_who_is_selling"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        >
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_who_is_selling">
 
                         <RadioButton
                             android:id="@+id/submit_radio_dealer"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/submit_dealer_button"
-                            android:onClick="@{() -> viewModel.onButtonClick()}"/>
+                            android:onClick="@{() -> viewModel.dealerInfoVisible(true)}"
+                            android:text="@string/submit_dealer_button" />
 
                         <RadioButton
                             android:id="@+id/submit_radio_private"
-                            android:background="@drawable/radio_selector"
                             style="@style/radioButtonStyle"
-                            android:text="@string/submit_private_button"
-                            android:onClick="@{() -> viewModel.onButtonClick()}"/>
+                            android:background="@drawable/radio_selector"
+                            android:onClick="@{() -> viewModel.dealerInfoVisible(false)}"
+                            android:text="@string/submit_private_button" />
                     </RadioGroup>
+
+                    <!--                    Dealership info-->
+
+                    <TextView
+                        android:id="@+id/submit_additional_fees_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/additional_fees"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_radio_group" />
+
+                    <EditText
+                        android:id="@+id/submit_additional_fees_edit"
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_text" />
+
+                    <TextView
+                        android:id="@+id/submit_dealer_name_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dealer_name"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
+
+                    <TextView
+                        android:id="@+id/submit_dealer_website_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dealer_website"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guideline_info"
+                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
+
+                    <EditText
+                        android:id="@+id/submit_dealer_name_edit"
+                        style="@style/editTextStyle"
+                        android:inputType="textCapWords"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_name_text" />
+
+                    <EditText
+                        android:id="@+id/submit_dealer_website_edit"
+                        style="@style/editTextStyle"
+                        android:inputType="textWebEditText"
+                        android:visibility="@{viewModel.dealerInfoView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guideline_info"
+                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_website_text" />
 
                     <!--    Your name           ....        Contact Phone Number-->
                     <!--    Your name-->
-
-
                     <TextView
                         android:id="@+id/submit_your_name_text"
                         style="@style/textViewStyle"
@@ -150,7 +210,7 @@
                         android:text="@string/submit_your_name_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_radio_group" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_name_edit" />
 
                     <EditText
                         android:id="@+id/submit_name_edit"
@@ -170,7 +230,7 @@
                         android:text="@string/submit_phone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline_info"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_radio_group" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_name_edit" />
 
 
                     <EditText
@@ -194,7 +254,7 @@
                 <!--    Section: Car Details-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/submit_car_details_contraint"
+                    android:id="@+id/submit_car_details_constraint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_ten"
@@ -251,33 +311,67 @@
 
 
                     <RadioGroup
+                        android:id="@+id/submit_sale_elsewhere_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_sale_elsewhere_group"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/submit_forsale_where"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        >
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_forsale_where">
 
                         <RadioButton
                             android:id="@+id/submit_sale_elsewhere_yes_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/yes"
-                            android:onClick="@{()-> viewModel.onButtonClick()}"/>
+                            android:onClick="@{()-> viewModel.carListingsVisible(true)}"
+                            android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_sale_elsewhere_no_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/no"
-                            android:onClick="@{()-> viewModel.onButtonClick()}"/>
+                            android:onClick="@{()-> viewModel.carListingsVisible(false)}"
+                            android:text="@string/no" />
 
 
                     </RadioGroup>
 
-                <!--   Year (no earlier than 1980)-->
+                    <!--                    Info on where else the car is being sold-->
+
+                    <TextView
+                        android:id="@+id/submit_take_others_down_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/other_listings_warning"
+                        android:textColor="@android:color/holo_red_light"
+                        android:visibility="@{viewModel.carListingsView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_sale_elsewhere_group" />
+
+                    <TextView
+                        android:id="@+id/submit_link_other_listings_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/link_other_listings"
+                        android:visibility="@{viewModel.carListingsView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_take_others_down_text" />
+
+                    <EditText
+                        android:id="@+id/submit_link_other_listings_edit"
+                        style="@style/editTextStyle"
+                        android:layout_width="300dp"
+                        android:inputType="textCapWords"
+                        android:visibility="@{viewModel.carListingsView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text" />
+
+                    <!--   Year (no earlier than 1980)-->
                     <TextView
                         android:id="@+id/submit_year_text"
                         style="@style/textViewStyle"
@@ -286,7 +380,7 @@
                         android:text="@string/year"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_sale_elsewhere_group" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_link_other_listings_edit" />
 
                     <Spinner
                         android:id="@+id/submit_year_spinner"
@@ -388,29 +482,69 @@
                         app:layout_constraintTop_toBottomOf="@+id/submit_vin_edit" />
 
                     <RadioGroup
+                        android:id="@+id/submit_car_location_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_car_location_group"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/submit_car_location"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location">
 
                         <RadioButton
                             android:id="@+id/submit_car_location_us_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/united_states"
-                            android:onClick="@{() -> viewModel.onButtonClick()}"/>
+                            android:onClick="@{() -> viewModel.carLocationVisible(true)}"
+                            android:text="@string/united_states" />
 
                         <RadioButton
                             android:id="@+id/submit_car_location_can_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/canada"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.carLocationVisible(false)}"
+                            android:text="@string/canada" />
 
                     </RadioGroup>
+
+                    <!--                    If US, ask for ZIP code, if CAN ask for City/Province-->
+
+                    <TextView
+                        android:id="@+id/submit_car_location_us_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/zip_code"
+                        android:visibility="@{viewModel.carLocationUSView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_group" />
+
+                    <TextView
+                        android:id="@+id/submit_car_location_can_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/city_and_province"
+                        android:visibility="@{viewModel.carLocationCanView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_group" />
+
+                    <EditText
+                        android:id="@+id/submit_car_location_us_edit"
+                        style="@style/editTextStyle"
+                        android:visibility="@{viewModel.carLocationUSView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_us_text" />
+
+                    <EditText
+                        android:id="@+id/submit_car_location_can_edit"
+                        style="@style/editTextStyle"
+                        android:visibility="@{viewModel.carLocationCanView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_us_text" />
 
                     <!--    Noteworthy Options/Features-->
 
@@ -422,7 +556,7 @@
                         android:text="@string/submit_things_to_note"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_car_location_group" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_car_location_us_edit" />
 
                     <EditText
                         android:id="@+id/submit_noteworthy_edit"
@@ -431,8 +565,7 @@
                         android:layout_height="75dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_things_to_note"
-                        />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_things_to_note" />
 
                     <!--    Has it been modified? (Completely Stock, or Modified)-->
                     <TextView
@@ -446,30 +579,51 @@
                         app:layout_constraintTop_toBottomOf="@+id/submit_noteworthy_edit" />
 
                     <RadioGroup
+                        android:id="@+id/submit_modified_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:id="@+id/submit_modified_group"
-                        app:layout_constraintTop_toBottomOf="@id/submit_been_modified_text"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/submit_been_modified_text">
 
 
                         <RadioButton
                             android:id="@+id/submit_stock_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/completely_stock"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isCarStock(true)}"
+                            android:text="@string/completely_stock" />
 
                         <RadioButton
                             android:id="@+id/submit_modified_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/modified"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isCarStock(false)}"
+                            android:text="@string/modified" />
 
                     </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/submit_car_modified_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/whats_been_modified"
+                        android:visibility="@{viewModel.carModifiedView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_modified_group" />
+
+                    <EditText
+                        android:id="@+id/submit_car_modified_edit"
+                        style="@style/editTextStyle"
+                        android:layout_width="250dp"
+                        android:layout_height="75dp"
+                        android:visibility="@{viewModel.carModifiedView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_modified_text" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_detail"
@@ -485,14 +639,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
                     android:paddingStart="@dimen/space_three"
                     android:paddingTop="@dimen/space_three"
                     android:paddingEnd="@dimen/space_three"
                     android:paddingBottom="6sp"
-                    android:background="@drawable/submit_constraint_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/submit_car_details_contraint">
+                    app:layout_constraintTop_toBottomOf="@id/submit_car_details_constraint">
 
 
                     <ImageView
@@ -519,10 +673,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_info"
+                        app:layout_constraintBaseline_toBaselineOf="@id/submit_title_info_tab"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/submit_title_info_tab"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_title_info_tab"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <!--    Where is car titled? US or CAN-->
                     <TextView
@@ -536,28 +690,72 @@
                         app:layout_constraintTop_toBottomOf="@+id/submit_info_title_subtitle" />
 
                     <RadioGroup
+                        android:id="@+id/submit_title_location_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_car_titled_radio"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_location"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:orientation="horizontal">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location">
 
                         <RadioButton
                             android:id="@+id/submit_title_location_us_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/united_states"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isTitleInUS(true)}"
+                            android:text="@string/united_states" />
 
                         <RadioButton
                             android:id="@+id/submit_title_location_can_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/canada"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isTitleInUS(false)}"
+                            android:text="@string/canada" />
                     </RadioGroup>
+
+                    <!--                    location of title details-->
+
+                    <TextView
+                        android:id="@+id/submit_title_location_us_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/state"
+                        android:visibility="@{viewModel.titleLocUSView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_group" />
+
+                    <TextView
+                        android:id="@+id/submit_title_location_can_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/province"
+                        android:visibility="@{viewModel.titleLocCanView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_group" />
+
+                    <Spinner
+                        android:id="@+id/submit_title_location_us_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.titleLocUSView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_us_text" />
+
+                    <Spinner
+                        android:id="@+id/submit_title_location_can_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.titleLocCanView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_can_text" />
+
+
                     <!--    Is vehicle title in your name?-->
                     <TextView
                         android:id="@+id/submit_title_in_whos_name"
@@ -567,31 +765,52 @@
                         android:text="@string/title_in_your_name"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_car_titled_radio" />
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_us_spinner" />
 
                     <RadioGroup
+                        android:id="@+id/submit_title_whos_name_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_title_whos_name_group"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_in_whos_name"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_in_whos_name">
 
                         <RadioButton
                             android:id="@+id/submit_title_whos_name_radio_yes"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/yes"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isTitleInUserName(true)}"
+                            android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_title_whos_name_radio_no"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/no"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.isTitleInUserName(false)}"
+                            android:text="@string/no" />
                     </RadioGroup>
+
+                    <!--                    if title not in user name, who's name is on it?-->
+
+                    <TextView
+                        android:id="@+id/submit_name_on_title_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/whos_name_on_title"
+                        android:visibility="@{viewModel.titleNameView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_whos_name_group" />
+
+                    <EditText
+                        android:id="@+id/submit_name_on_title_edit"
+                        style="@style/editTextStyle"
+                        android:visibility="@{viewModel.titleNameView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_name_on_title_text" />
 
                     <!--    is there a lienholder on the title-->
                     <TextView
@@ -602,31 +821,30 @@
                         android:text="@string/submit_lienholder_on_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_whos_name_group" />
+                        app:layout_constraintTop_toBottomOf="@id/submit_name_on_title_edit" />
 
                     <RadioGroup
+                        android:id="@+id/submit_lienholder_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_lienholder_group"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/submit_lienholder_text"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        >
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_lienholder_text">
 
                         <RadioButton
                             android:id="@+id/submit_lienholder_radio_yes"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/yes"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.onButtonClick()}"
+                            android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_lienholder_radio_no"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/no"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.onButtonClick()}"
+                            android:text="@string/no" />
                     </RadioGroup>
 
                     <!--    What is the title's status-->
@@ -657,11 +875,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
                     android:paddingStart="@dimen/space_three"
                     android:paddingTop="@dimen/space_three"
                     android:paddingEnd="@dimen/space_three"
                     android:paddingBottom="6sp"
-                    android:background="@drawable/submit_constraint_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_title_info_constraint">
@@ -690,10 +908,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reserve_price"
+                        app:layout_constraintBaseline_toBaselineOf="@id/submit_reserve_tab"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/submit_reserve_tab"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_reserve_tab"/>
+                        app:layout_constraintTop_toTopOf="parent" />
                     <!--    Do you want a min price to sell?-->
                     <TextView
                         android:id="@+id/submit_reserve_a_price_text"
@@ -706,29 +924,50 @@
                         app:layout_constraintTop_toBottomOf="@id/submit_reserve_subtitle" />
 
                     <RadioGroup
+                        android:id="@+id/submit_reserve_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:id="@+id/submit_reserve_group"
-                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_a_price_text"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        >
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_a_price_text">
 
                         <RadioButton
                             android:id="@+id/submit_reserve_radio_yes"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/yes"
-                            android:onClick="@{()->viewModel.onButtonClick()}"/>
+                            android:onClick="@{()->viewModel.wantAReserve(true)}"
+                            android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_reserve_radio_no"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:text="@string/no"
-                            android:onClick="@{()-> viewModel.onButtonClick()}"/>
+                            android:onClick="@{()-> viewModel.wantAReserve(false)}"
+                            android:text="@string/no" />
                     </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/submit_reserve_what_price_text"
+                        style="@style/textViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/what_reserve_price"
+                        android:visibility="@{viewModel.reserveView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_group" />
+
+                    <EditText
+                        android:id="@+id/submit_reserve_a_price_edit"
+                        style="@style/editTextStyle"
+                        android:drawableStart="@drawable/currency_usd"
+                        android:inputType="numberDecimal"
+                        android:visibility="@{viewModel.reserveView}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_what_price_text" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -736,11 +975,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
                     android:paddingStart="@dimen/space_three"
                     android:paddingTop="@dimen/space_three"
                     android:paddingEnd="@dimen/space_three"
                     android:paddingBottom="6sp"
-                    android:background="@drawable/submit_constraint_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_reserve_constraint">
@@ -769,9 +1008,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/photos"
+                        app:layout_constraintBaseline_toBaselineOf="@id/submit_photos_tab"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/submit_photos_tab"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_photos_tab"
                         app:layout_constraintTop_toTopOf="parent" />
                     <!--    8 to 16 photos can be uploaded-->
 
@@ -782,15 +1021,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
                     android:paddingStart="@dimen/space_three"
                     android:paddingTop="@dimen/space_three"
                     android:paddingEnd="@dimen/space_three"
                     android:paddingBottom="6sp"
-                    android:background="@drawable/submit_constraint_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/submit_photos_constraint"
-                    >
+                    app:layout_constraintTop_toBottomOf="@id/submit_photos_constraint">
 
                     <ImageView
                         android:id="@+id/submit_referral_tab"
@@ -817,9 +1055,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/referral"
                         android:textSize="@dimen/subtitle_size"
+                        app:layout_constraintBaseline_toBaselineOf="@id/submit_referral_tab"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/submit_referral_tab"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_referral_tab"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <!--    How did you hear about us? If user referred, name them-->
@@ -856,10 +1094,10 @@
                     app:layout_constraintTop_toBottomOf="@id/submit_referral_constraint" />
 
                 <Space
+                    android:id="@+id/submit_end_space"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_ten"
-                    android:id="@+id/submit_end_space"
-                    app:layout_constraintTop_toBottomOf="@id/submit_submit_button"/>
+                    app:layout_constraintTop_toBottomOf="@id/submit_submit_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

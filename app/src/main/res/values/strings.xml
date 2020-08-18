@@ -36,4 +36,16 @@
     <string name="referral_text">How did you hear about us? If a user referred, please leave their username</string>
     <string name="submit">Submit</string>
     <string name="submit_lienholder_on_title">Is there a lienholder on the title?</string>
+    <string name="additional_fees">Are there any additional fees the buyer will have to pay?</string>
+    <string name="dealer_name">Dealership name</string>
+    <string name="dealer_website">Dealership website</string>
+    <string name="other_listings_warning">If we accept your car, all other listings will need to be taken down before it can be listed on our site</string>
+    <string name="link_other_listings">Please link to all existing listings</string>
+    <string name="zip_code">Zip code</string>
+    <string name="city_and_province">City and Province</string>
+    <string name="whats_been_modified">What has been modified on the vehicle?</string>
+    <string name="state">State</string>
+    <string name="province">Province</string>
+    <string name="whos_name_on_title">Who\'s name is on the title?</string>
+    <string name="what_reserve_price">What reserve price would you like (USD)?</string>
 </resources>
