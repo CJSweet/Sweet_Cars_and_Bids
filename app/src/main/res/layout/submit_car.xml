@@ -384,12 +384,11 @@
 
                     <Spinner
                         android:id="@+id/submit_year_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/spinnerStyle"
+                        android:entries="@{viewModel.years}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_year_text"
-                        tools:listitem="@tools:sample/cities" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_year_text" />
 
                     <!--    Make and Model-->
                     <!--    Make-->
@@ -739,8 +738,8 @@
 
                     <Spinner
                         android:id="@+id/submit_title_location_us_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/spinnerStyle"
+                        android:entries="@array/states_array"
                         android:visibility="@{viewModel.titleLocUSView}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -748,8 +747,8 @@
 
                     <Spinner
                         android:id="@+id/submit_title_location_can_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/spinnerStyle"
+                        android:entries="@array/can_prov_array"
                         android:visibility="@{viewModel.titleLocCanView}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -860,12 +859,11 @@
 
                     <Spinner
                         android:id="@+id/submit_title_status_spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/spinnerStyle"
+                        android:entries="@array/title_status_array"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_title_status_text"
-                        tools:listitem="@tools:sample/cities" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_title_status_text" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

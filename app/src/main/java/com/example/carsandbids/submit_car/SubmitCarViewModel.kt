@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SubmitCarViewModel : ViewModel() {
 
@@ -46,6 +48,9 @@ class SubmitCarViewModel : ViewModel() {
     val reserveView: LiveData<Int>
         get() = _reserveView
 
+
+    val years = arrayListOf<Int>()
+
     //initialize all variable views to GONE
     init {
         _dealerInfoView.value = View.GONE
@@ -57,6 +62,8 @@ class SubmitCarViewModel : ViewModel() {
         _titleLocCanView.value = View.GONE
         _titleNameView.value = View.GONE
         _reserveView.value = View.GONE
+
+        setYearSpinnerArray()
     }
 
     fun onButtonClick() {
@@ -135,6 +142,14 @@ class SubmitCarViewModel : ViewModel() {
             _reserveView.value = View.VISIBLE
         } else {
             _reserveView.value = View.GONE
+        }
+    }
+
+    // to populate model year spinner
+    fun setYearSpinnerArray(){
+
+        for(year in 1980.. Calendar.getInstance().get(Calendar.YEAR)){
+            years.add(year)
         }
     }
 }

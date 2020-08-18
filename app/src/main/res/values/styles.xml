@@ -71,4 +71,16 @@
         <item name="android:textSize">@dimen/norm_text_size</item>
         <item name="android:padding">@dimen/space_ten</item>
     </style>
+
+    <style name="spinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:layout_width">175dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/space_four</item>
+        <item name="android:layout_marginEnd">@dimen/space_four</item>
+        <item name="android:paddingTop">@dimen/space_four</item>
+        <item name="android:paddingBottom">@dimen/space_four</item>
+        <item name="layout_constraintHorizontal_bias">0</item>
+        <item name="android:background">@drawable/spinner_selected_background</item>
+        <item name="android:popupBackground">@drawable/edit_text_shape</item>
+    </style>
 </resources>
