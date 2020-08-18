@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <!-- when item clicked -->
+    <item
+        android:drawable="@drawable/button_background_ave"
+        android:state_checked="false"
+        />
+
+    <!-- when item in focus, but not clicked -->
+    <item android:drawable="@drawable/button_background_important"
+        android:state_checked="true"/>
+
+    <!-- when item enabled but not clicked -->
+    <item
+        android:drawable="@drawable/button_background_ave"
+        />
+</selector>

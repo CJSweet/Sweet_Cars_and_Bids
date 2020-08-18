@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin">10sp</dimen>
+    <dimen name="space_ten">10sp</dimen>
     <dimen name="title_size">24sp</dimen>
     <dimen name="subtitle_size">20sp</dimen>
-    <dimen name="edit_width">100dp</dimen>
+    <dimen name="edit_width">150dp</dimen>
     <dimen name="norm_text_size">16sp</dimen>
+    <dimen name="space_three">3sp</dimen>
+    <dimen name="space_four">4sp</dimen>
+    <dimen name="corners">7dp</dimen>
+    <dimen name="border_size" format="float">0.5dp</dimen>
 </resources>

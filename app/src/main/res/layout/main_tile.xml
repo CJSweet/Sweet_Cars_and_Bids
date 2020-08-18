@@ -25,8 +25,8 @@
             tools:text="5:45:08"
             android:layout_gravity="bottom|start"
             android:background="#FFFFFF"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/space_ten"
+            android:layout_marginEnd="@dimen/space_ten"
             />
 
         <TextView
@@ -37,8 +37,8 @@
             tools:text="$15,000"
             android:layout_gravity="bottom|end"
             android:background="#FFFFFF"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"/>
+            android:layout_marginStart="@dimen/space_ten"
+            android:layout_marginEnd="@dimen/space_ten"/>
 
     </FrameLayout>
 
@@ -50,8 +50,8 @@
         android:id="@+id/tile_car_name"
         tools:text="Subaru BRZ"
         android:text="Subaru BRZ"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"/>
+        android:layout_marginStart="@dimen/space_ten"
+        android:layout_marginEnd="@dimen/space_ten"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         android:id="@+id/tile_car_descript"
         tools:text="2016 model with 16,000 miles!"
         android:text="16,000 miles!"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"/>
+        android:layout_marginStart="@dimen/space_ten"
+        android:layout_marginEnd="@dimen/space_ten"/>
 
 </LinearLayout>
