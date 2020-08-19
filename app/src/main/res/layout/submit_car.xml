@@ -361,15 +361,42 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/submit_take_others_down_text" />
 
+
+<!--                    to be able to dynamically make more views-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/submit_more_links_layout"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.carListingsView}"
+                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
                     <EditText
                         android:id="@+id/submit_link_other_listings_edit"
                         style="@style/editTextStyle"
-                        android:layout_width="300dp"
+                        android:layout_width="@dimen/three_hundred"
                         android:inputType="textCapWords"
-                        android:visibility="@{viewModel.carListingsView}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text" />
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/submit_more_listing_links_text"
+                        android:text="@string/add_more_links"
+                        style="@style/textViewStyle"
+                        android:textColor="@color/colorPrimary"
+                        android:visibility="@{viewModel.carListingsView}"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintTop_toBottomOf="@id/submit_more_links_layout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <!--   Year (no earlier than 1980)-->
                     <TextView
@@ -380,12 +407,11 @@
                         android:text="@string/year"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_link_other_listings_edit" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_more_listing_links_text" />
 
                     <Spinner
                         android:id="@+id/submit_year_spinner"
                         style="@style/spinnerStyle"
-                        android:entries="@{viewModel.years}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/submit_year_text" />
@@ -860,7 +886,6 @@
                     <Spinner
                         android:id="@+id/submit_title_status_spinner"
                         style="@style/spinnerStyle"
-                        android:entries="@array/title_status_array"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/submit_title_status_text" />

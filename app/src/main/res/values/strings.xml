@@ -48,6 +48,7 @@
     <string name="province">Province</string>
     <string name="whos_name_on_title">Who\'s name is on the title?</string>
     <string name="what_reserve_price">What reserve price would you like (USD)?</string>
+    <string name="add_more_links">+ Add more links</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>

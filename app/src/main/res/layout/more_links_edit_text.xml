@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/submit_more_links_edit"
+    style="@style/editTextStyle"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:inputType="textCapWords"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />

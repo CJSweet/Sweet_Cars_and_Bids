@@ -63,7 +63,6 @@ class SubmitCarViewModel : ViewModel() {
         _titleNameView.value = View.GONE
         _reserveView.value = View.GONE
 
-        setYearSpinnerArray()
     }
 
     fun onButtonClick() {
@@ -145,11 +144,4 @@ class SubmitCarViewModel : ViewModel() {
         }
     }
 
-    // to populate model year spinner
-    fun setYearSpinnerArray(){
-
-        for(year in 1980.. Calendar.getInstance().get(Calendar.YEAR)){
-            years.add(year)
-        }
-    }
 }
