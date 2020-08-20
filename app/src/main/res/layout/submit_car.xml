@@ -362,41 +362,41 @@
                         app:layout_constraintTop_toBottomOf="@id/submit_take_others_down_text" />
 
 
-<!--                    to be able to dynamically make more views-->
+                    <!--                    to be able to dynamically make more views-->
                     <LinearLayout
+                        android:id="@+id/submit_more_links_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_more_links_layout"
                         android:orientation="vertical"
                         android:visibility="@{viewModel.carListingsView}"
-                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
-
-                    <EditText
-                        android:id="@+id/submit_link_other_listings_edit"
-                        style="@style/editTextStyle"
-                        android:layout_width="@dimen/three_hundred"
-                        android:inputType="textCapWords"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text">
+
+                        <EditText
+                            android:id="@+id/submit_link_other_listings_edit"
+                            style="@style/editTextStyle"
+                            android:layout_width="@dimen/three_hundred"
+                            android:inputType="textCapWords"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/submit_more_listing_links_text"
+                        style="@style/textViewStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/submit_more_listing_links_text"
-                        android:text="@string/add_more_links"
-                        style="@style/textViewStyle"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="@{viewModel.carListingsView}"
                         android:clickable="true"
                         android:focusable="true"
-                        app:layout_constraintTop_toBottomOf="@id/submit_more_links_layout"
+                        android:text="@string/add_more_links"
+                        android:textColor="@color/colorPrimary"
+                        android:visibility="@{viewModel.carListingsView}"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_more_links_layout" />
 
                     <!--   Year (no earlier than 1980)-->
                     <TextView
@@ -1035,7 +1035,34 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/submit_photos_tab"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--    8 to 16 photos can be uploaded-->
+                    <!--    8 to 16 photos can be uploaded on the website-->
+
+                    <ImageView
+                        android:id="@+id/submit_see_photos_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:layout_margin="@dimen/space_ten"
+                        android:background="@drawable/edit_text_shape"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_photos_subtitle" />
+
+                    <Button
+                        android:id="@+id/submit_select_photos_button"
+                        style="@style/buttonStyle.Ave"
+                        android:text="@string/select_photo"
+                        app:layout_constraintEnd_toStartOf="@id/submit_take_photos_button"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_see_photos_imageview" />
+
+                    <Button
+                        android:id="@+id/submit_take_photos_button"
+                        style="@style/buttonStyle.Ave"
+                        android:text="@string/take_photo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/submit_select_photos_button"
+                        app:layout_constraintTop_toBottomOf="@id/submit_see_photos_imageview"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

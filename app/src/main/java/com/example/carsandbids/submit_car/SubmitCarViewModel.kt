@@ -1,8 +1,13 @@
 package com.example.carsandbids.submit_car
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

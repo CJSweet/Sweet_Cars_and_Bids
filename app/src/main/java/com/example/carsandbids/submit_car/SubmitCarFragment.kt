@@ -1,20 +1,30 @@
 package com.example.carsandbids.submit_car
 
+import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
 import kotlinx.android.synthetic.main.more_links_edit_text.view.*
+import kotlinx.android.synthetic.main.submit_car.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -22,6 +32,25 @@ import kotlin.collections.ArrayList
 class SubmitCarFragment : Fragment() {
 
     private lateinit var parentLayout: LinearLayout
+
+    //for camera access
+    var camera_uri: Uri? = null
+
+    companion object {
+
+        //Image pick code
+        private val IMAGE_PICK_CODE = 1000
+
+        //Permission code for gallery photos
+        private val PERMISSION_CODE_PHOTO = 1001
+
+        //Permission code for camera access
+        private val PERMISSION_CODE_CAMERA = 1002
+
+        //when taking picture
+        private val CAMERA_CAPTURE_CODE = 1003
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +76,11 @@ class SubmitCarFragment : Fragment() {
 
 
         //bind title status spinner (code based off of spinner documentation: https://developer.android.com/guide/topics/ui/controls/spinner)
-        ArrayAdapter.createFromResource(requireActivity().applicationContext, R.array.title_status_array, R.layout.spinner_layout_selected)
+        ArrayAdapter.createFromResource(
+            requireActivity().applicationContext,
+            R.array.title_status_array,
+            R.layout.spinner_layout_selected
+        )
             .also { adapter ->
                 //Specify layout to use when list of choices appears
                 adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown)
@@ -56,7 +89,11 @@ class SubmitCarFragment : Fragment() {
             }
 
         //bind US state location spinner
-        ArrayAdapter.createFromResource(requireActivity().applicationContext, R.array.states_array, R.layout.spinner_layout_selected)
+        ArrayAdapter.createFromResource(
+            requireActivity().applicationContext,
+            R.array.states_array,
+            R.layout.spinner_layout_selected
+        )
             .also { adapter ->
                 adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown)
 
@@ -64,7 +101,11 @@ class SubmitCarFragment : Fragment() {
             }
 
         //bind CAN province location spinner
-        ArrayAdapter.createFromResource(requireActivity().applicationContext, R.array.can_prov_array, R.layout.spinner_layout_selected)
+        ArrayAdapter.createFromResource(
+            requireActivity().applicationContext,
+            R.array.can_prov_array,
+            R.layout.spinner_layout_selected
+        )
             .also { adapter ->
                 adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown)
 
@@ -72,7 +113,11 @@ class SubmitCarFragment : Fragment() {
             }
 
         //bind year spinner adapter
-        ArrayAdapter(requireActivity().applicationContext, R.layout.spinner_layout_selected, arrayListYears)
+        ArrayAdapter(
+            requireActivity().applicationContext,
+            R.layout.spinner_layout_selected,
+            arrayListYears
+        )
             .also { adapter ->
                 adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown)
 
@@ -86,23 +131,34 @@ class SubmitCarFragment : Fragment() {
             moreLinks()
         }
 
+        //set on click for photo button
+        binding.submitSelectPhotosButton.setOnClickListener {
+            checkPhotoPermission()
+        }
+
+        //set on click for camera button
+        binding.submitTakePhotosButton.setOnClickListener {
+            checkCameraPermission()
+        }
+
         return binding.root
     }
 
-    fun arrayListYears() : ArrayList<Int> {
+    fun arrayListYears(): ArrayList<Int> {
 
         val years = ArrayList<Int>()
 
-        for(year in 1980.. Calendar.getInstance().get(Calendar.YEAR)){
+        for (year in 1980..Calendar.getInstance().get(Calendar.YEAR)) {
             years.add(year)
         }
 
         return years
     }
 
-    fun moreLinks(){
+    fun moreLinks() {
         val inflater =
-            this.requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE ) as LayoutInflater?
+            this.requireActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
         val newEditView: View = inflater!!.inflate(R.layout.more_links_edit_text, null)
 
         //get proper dimen value from dimen resource xml
@@ -111,11 +167,144 @@ class SubmitCarFragment : Fragment() {
         ///resources.displayMetrics.density
 
         //layout params code inspired by: https://stackoverflow.com/questions/47673723/relative-layout-params-in-kotlin
-        var param: LinearLayout.LayoutParams = LinearLayout.LayoutParams(editWidth.toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
-        param.setMargins(12,6,6,10)
+        var param: LinearLayout.LayoutParams =
+            LinearLayout.LayoutParams(editWidth.toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
+        param.setMargins(12, 6, 6, 10)
         newEditView.layoutParams = param
 
         // Add the new row at end of layout
         parentLayout.addView(newEditView, parentLayout.childCount)
+    }
+
+    //to get photo, first need permission
+    //code for this method and following 2 from:
+    // https://stackoverflow.com/questions/55933590/select-photo-on-gallery-kotlin
+    fun checkPhotoPermission() {
+        //version must be greater than Marshmallow
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //if permission denied, request permission
+            if (ContextCompat.checkSelfPermission(
+                    requireActivity().applicationContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                == PackageManager.PERMISSION_DENIED
+            ) {
+                val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestPermissions(permission, PERMISSION_CODE_PHOTO)
+            }
+            //once permission granted, pick Image
+            else {
+                pickImageFromGallery()
+            }
+        }
+        ///phone OS older than Marshmallow
+        else {
+            pickImageFromGallery()
+        }
+    }
+
+    private fun pickImageFromGallery() {
+        //we intend to pick something
+        val intent = Intent(Intent.ACTION_PICK)
+        //we want to pick an image
+        intent.type = "image/*"
+        //now we know the type, so start the activity
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    //now must override the startActivityResult function so we can return image
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == IMAGE_PICK_CODE) {
+//            make sure data (in this case the image) is not null
+//            https://www.youtube.com/watch?v=ZCs7RFZQ_To
+                if (data != null && data.data != null) {
+                    //image URI
+                    val image = data.data
+                    submit_see_photos_imageview.setImageURI(image)
+                }
+            }
+            else if(requestCode == CAMERA_CAPTURE_CODE){
+                submit_see_photos_imageview.setImageURI(camera_uri)
+            }
+        }
+    }
+
+    //to access Camera, need permission first
+    //just like selecting photo from gallery
+    fun checkCameraPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(
+                    requireContext().applicationContext,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_DENIED
+                || checkSelfPermission(
+                    requireContext().applicationContext,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+
+                //permission was not enabled/denied
+                val permission =
+                    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                //show pop-up to request permission
+                requestPermissions(permission, PERMISSION_CODE_CAMERA)
+            } else {
+                //permission already granted
+                openCamera()
+            }
+        } else {
+            //OS < Marshmallo
+            openCamera()
+        }
+    }
+
+    private fun openCamera() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+        camera_uri = requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+        //camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camera_uri)
+        startActivityForResult(cameraIntent, CAMERA_CAPTURE_CODE)
+
+    }
+
+    //when permission popup is shown and granted access, access image gallery
+    //if user denies access, do nothing
+    // from: https://www.youtube.com/watch?v=gd300jxLEe0
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_CODE_PHOTO -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //permission from popup granted so call image gallery method
+                    pickImageFromGallery()
+                }
+                //else permission was denied toast is shown
+                else {
+                    Toast.makeText(requireContext(), "Permission Photos Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+            PERMISSION_CODE_CAMERA -> {
+                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //permission from popup was granted
+                    openCamera()
+                }
+                else{
+                    //permission from popup was denied
+                    Toast.makeText(context, "Permission Camera Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
     }
 }
