@@ -1,9 +1,11 @@
 package com.example.carsandbids.submit_car
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -19,7 +21,6 @@ class SubmitCarViewModel : ViewModel() {
     private val _dealerInfoView = MutableLiveData<Int>()
     val dealerInfoView: LiveData<Int>
         get() = _dealerInfoView
-
 
     private val _carListingsView = MutableLiveData<Int>()
     val carListingsView: LiveData<Int>
@@ -54,7 +55,19 @@ class SubmitCarViewModel : ViewModel() {
         get() = _reserveView
 
 
-    val years = arrayListOf<Int>()
+    private val _extraLinksNum = MutableLiveData<Int>()
+    val extraLinksNum: LiveData<Int>
+        get() = _extraLinksNum
+
+    //determine if helper text can be displayed on photo
+    var photoTextVis = MutableLiveData<Int>()
+
+    //determines if clear button can be displayed for photos
+    var clrBtnVis = MutableLiveData<Int>()
+
+    //arraylist for the photos added to submit page
+    var imgUris = ArrayList<Uri>()
+
 
     //initialize all variable views to GONE
     init {
@@ -68,12 +81,10 @@ class SubmitCarViewModel : ViewModel() {
         _titleNameView.value = View.GONE
         _reserveView.value = View.GONE
 
-    }
+        _extraLinksNum.value = 0
 
-    fun onButtonClick() {
-        //when button is clicked, flip the colors of background and
-        // text
-        println("button pressed")
+        photoTextVis.value = View.VISIBLE
+        clrBtnVis.value = View.GONE
     }
 
     //if user selects dealer as seller, then display dealer info views
@@ -147,6 +158,11 @@ class SubmitCarViewModel : ViewModel() {
         } else {
             _reserveView.value = View.GONE
         }
+    }
+
+    fun onClrBtnClick() {
+        imgUris.clear()
+        photoTextVis.value = View.VISIBLE
     }
 
 }

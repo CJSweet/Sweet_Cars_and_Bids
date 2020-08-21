@@ -5,3 +5,4 @@ import com.google.firebase.ktx.Firebase
 
 //Access the Cloud Firestore instance
 val db = Firebase.firestore
+

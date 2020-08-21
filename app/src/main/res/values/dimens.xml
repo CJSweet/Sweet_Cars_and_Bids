@@ -10,4 +10,5 @@
     <dimen name="corners">7dp</dimen>
     <dimen name="border_size" format="float">0.5dp</dimen>
     <dimen name="three_hundred">300dp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
 </resources>
