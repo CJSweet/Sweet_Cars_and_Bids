@@ -251,32 +251,49 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
 //            make sure data (in this case the image) is not null
 //            https://www.youtube.com/watch?v=ZCs7RFZQ_To
                 if (data != null && data.data != null) {
+                    val clipData = data.clipData
+                    if (clipData != null) {
+                        when {
+                            //getBitmap is deprecated after SDK 28
+                            Build.VERSION.SDK_INT < 28 -> {
+                                for (photo in 0 until clipData.itemCount) {
+                                    val imageUri = clipData.getItemAt(photo).uri
+                                    val bitmap = MediaStore.Images.Media.getBitmap(
+                                        requireContext().contentResolver, imageUri
+                                    )
+                                    submitCarViewModel.imgBitmaps.add(bitmap)
+                                }
 
-                    //if more than one photo
-                    if (data.clipData != null) {
-                        val clipData = data.clipData
-                        if (clipData != null) {
-                            for (photo in 0 until clipData.itemCount) {
-                                val imageUri = clipData.getItemAt(photo).uri
-                                val source = ImageDecoder.createSource(requireContext().contentResolver, imageUri!!)
-                                val bitmap = ImageDecoder.decodeBitmap(source)
-                                submitCarViewModel.imgBitmaps.add(bitmap)
+                            }
+                            else -> {
+                                for (photo in 0 until clipData.itemCount) {
+                                    val imageUri = clipData.getItemAt(photo).uri
+                                    val source = ImageDecoder.createSource(
+                                        requireContext().contentResolver,
+                                        imageUri!!
+                                    )
+                                    val bitmap = ImageDecoder.decodeBitmap(source)
+                                    submitCarViewModel.imgBitmaps.add(bitmap)
+                                }
                             }
                         }
                     }
-                    //if user selected only one photo
-                    else {
-                        //image URI
-                        val imageUri = data.data
-                        val source = ImageDecoder.createSource(requireContext().contentResolver, imageUri!!)
-                        val bitmap = ImageDecoder.decodeBitmap(source)
-                        submitCarViewModel.imgBitmaps.add(bitmap)
-                    }
                 }
             } else if (requestCode == CAMERA_CAPTURE_CODE) {
-                val source = ImageDecoder.createSource(requireContext().contentResolver, cameraUri!!)
-                val cameraBitmap = ImageDecoder.decodeBitmap(source)
-                submitCarViewModel.imgBitmaps.add(cameraBitmap)
+                when {
+                    Build.VERSION.SDK_INT < 28 -> {
+                        val cameraBitmap = MediaStore.Images.Media.getBitmap(
+                            requireContext().contentResolver, cameraUri
+                        )
+                        submitCarViewModel.imgBitmaps.add(cameraBitmap)
+                    }
+                    else -> {
+                        val source =
+                            ImageDecoder.createSource(requireContext().contentResolver, cameraUri!!)
+                        val cameraBitmap = ImageDecoder.decodeBitmap(source)
+                        submitCarViewModel.imgBitmaps.add(cameraBitmap)
+                    }
+                }
             }
         }
 
@@ -368,6 +385,6 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
     //TODO: Refresh the screen after deleting a photo
     override fun onDeletePhotoClick(position: Int) {
         submitCarViewModel.imgBitmaps.removeAt(position)
-        submit_photos_recycler.adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
+        binding.submitPhotosRecycler.adapter!!.notifyDataSetChanged()
     }
 }
