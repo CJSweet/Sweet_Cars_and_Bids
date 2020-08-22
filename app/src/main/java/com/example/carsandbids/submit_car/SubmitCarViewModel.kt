@@ -1,19 +1,11 @@
 package com.example.carsandbids.submit_car
 
-import android.Manifest
-import android.app.Activity
-import android.content.Context
-import android.content.pm.PackageManager
-import android.graphics.Color
+import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SubmitCarViewModel : ViewModel() {
@@ -66,7 +58,7 @@ class SubmitCarViewModel : ViewModel() {
     var clrBtnVis = MutableLiveData<Int>()
 
     //arraylist for the photos added to submit page
-    var imgUris = ArrayList<Uri>()
+    var imgBitmaps = ArrayList<Bitmap>()
 
 
     //initialize all variable views to GONE
@@ -161,7 +153,7 @@ class SubmitCarViewModel : ViewModel() {
     }
 
     fun onClrBtnClick() {
-        imgUris.clear()
+        imgBitmaps.clear()
         photoTextVis.value = View.VISIBLE
     }
 

@@ -1,5 +1,6 @@
 package com.example.carsandbids.submit_car
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
@@ -17,7 +18,7 @@ import com.example.carsandbids.R
 import kotlinx.android.synthetic.main.photo_item.view.*
 import kotlinx.android.synthetic.main.submit_car.view.*
 
-class PhotoAdapter(private val photos: ArrayList<Uri>, val onDeletePhotoListener: OnDeletePhotoListener) :
+class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListener: OnDeletePhotoListener) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -58,7 +59,7 @@ class PhotoAdapter(private val photos: ArrayList<Uri>, val onDeletePhotoListener
     override fun onBindViewHolder(holder: PhotoAdapter.PhotoViewHolder, position: Int) {
         // get element from data set (in this case, the URI)
         // replace the contents of the image view with the new URI
-        holder.imageView.submit_photo_view.setImageURI(photos[position])
+        holder.imageView.submit_photo_view.setImageBitmap(photos[position])
 
         holder.imageView.submit_delete_text.setOnClickListener {
             photos.removeAt(position)
