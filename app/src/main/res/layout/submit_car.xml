@@ -126,80 +126,90 @@
                             android:id="@+id/submit_radio_dealer"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:onClick="@{() -> viewModel.dealerInfoVisible(true)}"
                             android:text="@string/submit_dealer_button" />
 
                         <RadioButton
                             android:id="@+id/submit_radio_private"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:onClick="@{() -> viewModel.dealerInfoVisible(false)}"
                             android:text="@string/submit_private_button" />
                     </RadioGroup>
 
                     <!--                    Dealership info-->
 
-                    <TextView
-                        android:id="@+id/submit_additional_fees_text"
-                        style="@style/textViewStyle"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/additional_fees"
-                        android:visibility="@{viewModel.dealerInfoView}"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/submit_dealer_info_layout"
+                        android:background="@drawable/submit_constraint_background"
+                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_radio_group"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_radio_group" />
-
-                    <EditText
-                        android:id="@+id/submit_additional_fees_edit"
-                        style="@style/editTextStyle"
-                        android:layout_width="match_parent"
-                        android:inputType="textCapSentences"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.dealerInfoView}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_text" />
+                        android:visibility="@{viewModel.dealerInfoView}">
 
-                    <TextView
-                        android:id="@+id/submit_dealer_name_text"
-                        style="@style/textViewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dealer_name"
-                        android:visibility="@{viewModel.dealerInfoView}"
-                        app:layout_constraintEnd_toStartOf="@id/guideline_info"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
+                        <TextView
+                            android:id="@+id/submit_additional_fees_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/additional_fees"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/submit_dealer_website_text"
-                        style="@style/textViewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dealer_website"
-                        android:visibility="@{viewModel.dealerInfoView}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/guideline_info"
-                        app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
+                        <EditText
+                            android:id="@+id/submit_additional_fees_edit"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapSentences"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_text" />
 
-                    <EditText
-                        android:id="@+id/submit_dealer_name_edit"
-                        style="@style/editTextStyle"
-                        android:inputType="textCapWords"
-                        android:visibility="@{viewModel.dealerInfoView}"
-                        app:layout_constraintEnd_toEndOf="@id/guideline_info"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_name_text" />
+                        <TextView
+                            android:id="@+id/submit_dealer_name_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dealer_name"
+                            app:layout_constraintEnd_toStartOf="@id/guideline_dealer_info"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
 
-                    <EditText
-                        android:id="@+id/submit_dealer_website_edit"
-                        style="@style/editTextStyle"
-                        android:inputType="textWebEditText"
-                        android:visibility="@{viewModel.dealerInfoView}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/guideline_info"
-                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_website_text" />
+                        <TextView
+                            android:id="@+id/submit_dealer_website_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dealer_website"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guideline_dealer_info"
+                            app:layout_constraintTop_toBottomOf="@id/submit_additional_fees_edit" />
+
+                        <EditText
+                            android:id="@+id/submit_dealer_name_edit"
+                            style="@style/editTextStyle"
+                            android:inputType="textCapWords"
+                            app:layout_constraintEnd_toEndOf="@id/guideline_dealer_info"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_dealer_name_text" />
+
+                        <EditText
+                            android:id="@+id/submit_dealer_website_edit"
+                            style="@style/editTextStyle"
+                            android:inputType="textWebEditText"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guideline_dealer_info"
+                            app:layout_constraintTop_toBottomOf="@id/submit_dealer_website_text" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline_dealer_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--    Your name           ....        Contact Phone Number-->
                     <!--    Your name-->
@@ -211,7 +221,7 @@
                         android:text="@string/submit_your_name_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_name_edit" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_info_layout" />
 
                     <EditText
                         android:id="@+id/submit_name_edit"
@@ -231,7 +241,7 @@
                         android:text="@string/submit_phone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline_info"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_name_edit" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_dealer_info_layout" />
 
 
                     <EditText
@@ -324,14 +334,12 @@
                             android:id="@+id/submit_sale_elsewhere_yes_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:onClick="@{()-> viewModel.carListingsVisible(true)}"
                             android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_sale_elsewhere_no_radio"
                             style="@style/radioButtonStyle"
                             android:background="@drawable/radio_selector"
-                            android:onClick="@{()-> viewModel.carListingsVisible(false)}"
                             android:text="@string/no" />
 
 
@@ -339,65 +347,72 @@
 
                     <!--                    Info on where else the car is being sold-->
 
-                    <TextView
-                        android:id="@+id/submit_take_others_down_text"
-                        style="@style/textViewStyle"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/other_listings_warning"
-                        android:textColor="@android:color/holo_red_light"
-                        android:visibility="@{viewModel.carListingsView}"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/submit_sale_elsewhere_layout"
+                        app:layout_constraintTop_toBottomOf="@id/submit_sale_elsewhere_group"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_sale_elsewhere_group" />
-
-                    <TextView
-                        android:id="@+id/submit_link_other_listings_text"
-                        style="@style/textViewStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/link_other_listings"
-                        android:visibility="@{viewModel.carListingsView}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_take_others_down_text" />
+                        android:visibility="@{viewModel.carListingsView}">
 
-
-                    <!--                    to be able to dynamically make more views-->
-                    <LinearLayout
-                        android:id="@+id/submit_more_links_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="@{viewModel.carListingsView}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text">
-
-                        <EditText
-                            android:id="@+id/submit_link_other_listings_edit"
-                            style="@style/editTextStyle"
-                            android:layout_width="@dimen/three_hundred"
-                            android:inputType="textWebEditText"
+                        <TextView
+                            android:id="@+id/submit_take_others_down_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/other_listings_warning"
+                            android:textColor="@android:color/holo_red_light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/submit_link_other_listings_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/link_other_listings"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_take_others_down_text" />
 
-                    <TextView
-                        android:id="@+id/submit_more_listing_links_text"
-                        style="@style/textViewStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="@string/add_more_links"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="@{viewModel.carListingsView}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_more_links_layout" />
+
+                        <!--                    to be able to dynamically make more views-->
+                        <LinearLayout
+                            android:id="@+id/submit_more_links_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_link_other_listings_text">
+
+                            <EditText
+                                android:id="@+id/submit_link_other_listings_edit"
+                                style="@style/editTextStyle"
+                                android:layout_width="@dimen/three_hundred"
+                                android:inputType="textWebEditText"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/submit_more_listing_links_text"
+                            style="@style/textViewStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:text="@string/add_more_links"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/submit_more_links_layout" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <!--   Year (no earlier than 1980)-->
                     <TextView
@@ -408,7 +423,7 @@
                         android:text="@string/year"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/submit_more_listing_links_text" />
+                        app:layout_constraintTop_toBottomOf="@+id/submit_sale_elsewhere_layout" />
 
                     <Spinner
                         android:id="@+id/submit_year_spinner"

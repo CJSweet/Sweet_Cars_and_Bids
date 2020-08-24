@@ -84,6 +84,7 @@ class SubmitCarViewModel : ViewModel() {
 
         if (!showDealerInfo) {
             _dealerInfoView.value = View.GONE
+
         } else {
             _dealerInfoView.value = View.VISIBLE
         }

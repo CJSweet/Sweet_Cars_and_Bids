@@ -12,6 +12,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -72,6 +74,17 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         // Specify the fragment view as the lifecycle owner of the binding.
         // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = viewLifecycleOwner
+
+
+        //add adapter to Recycler
+        val adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
+        binding.submitPhotosRecycler.adapter = adapter
+
+        //call more links as many times as the number of viewModel._extraLinks
+        // that way through rotation, the number of UI elements are saved
+        for (link in 0 until links) {
+            moreLinks()
+        }
 
         val arrayListYears = arrayListYears()
 
@@ -146,23 +159,30 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         binding.submitClearPhotosButton.setOnClickListener {
             submitCarViewModel.onClrBtnClick()
 
-            submit_photos_recycler.adapter!!.notifyItemRangeRemoved(0, submitCarViewModel.imgBitmaps.size)
+            submit_photos_recycler.adapter!!.notifyItemRangeRemoved(
+                0,
+                submitCarViewModel.imgBitmaps.size
+            )
         }
 
-        //call more links as many times as the number of viewModel._extraLinks
-        // that way through rotation, the number of UI elements are saved
-        for (link in 0 until links) {
-            moreLinks()
+        //onclick dealer radio button, call method for animation
+        binding.submitRadioDealer.setOnClickListener {
+            openDealerInfo()
         }
 
+        //onclick private seller button, call method for animation
+        binding.submitRadioPrivate.setOnClickListener {
+            closeDealerInfo()
+        }
 
-        //add adapter to Recycler the first time
-        val adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
-        binding.submitPhotosRecycler.adapter = adapter
+        //onclick yes for sale else where button, for animation
+        binding.submitSaleElsewhereYesRadio.setOnClickListener {
+            openMoreLinks()
+        }
 
-        //on submit, gather all the information and send to database
-        binding.submitSubmitButton.setOnClickListener {
-            println(submit_name_edit.text.toString())
+        //no elsewhere
+        binding.submitSaleElsewhereNoRadio.setOnClickListener {
+            closeMoreLinks()
         }
 
         return binding.root
@@ -385,5 +405,83 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         submitCarViewModel.imgBitmaps.removeAt(position)
         submit_photos_recycler.adapter!!.notifyItemRemoved(position)
         submitCarViewModel.photoTextVisibility()
+    }
+
+    private fun openDealerInfo() {
+        val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
+        dropAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                submitCarViewModel.dealerInfoVisible(true)
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                println("animation end")
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                submitCarViewModel.dealerInfoVisible(true)
+            }
+
+        })
+        submit_dealer_info_layout.startAnimation(dropAnim)
+    }
+
+    private fun closeDealerInfo() {
+        val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
+        upAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                submitCarViewModel.dealerInfoVisible(false)
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                submitCarViewModel.dealerInfoVisible(false)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                println("animation start")
+            }
+
+        })
+        submit_dealer_info_layout.startAnimation(upAnim)
+    }
+
+
+    private fun openMoreLinks() {
+        val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
+        dropAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                submitCarViewModel.carListingsVisible(true)
+                println("Open more links repeated")
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                println("animation end")
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                submitCarViewModel.carListingsVisible(true)
+            }
+
+        })
+        submit_sale_elsewhere_layout.startAnimation(dropAnim)
+    }
+
+    private fun closeMoreLinks() {
+        val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
+        upAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                submitCarViewModel.carListingsVisible(false)
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                submitCarViewModel.carListingsVisible(false)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                println("animation start")
+            }
+
+        })
+        submit_sale_elsewhere_layout.startAnimation(upAnim)
     }
 }
