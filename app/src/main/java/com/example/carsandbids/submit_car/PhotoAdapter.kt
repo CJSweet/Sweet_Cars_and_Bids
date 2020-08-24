@@ -26,14 +26,20 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a ImageView.
-    class PhotoViewHolder(val imageView: LinearLayout, val onDeletePhotoListener: OnDeletePhotoListener) : RecyclerView.ViewHolder(imageView), View.OnClickListener{
+    inner class PhotoViewHolder(val imageView: LinearLayout) : RecyclerView.ViewHolder(imageView), View.OnClickListener{
 
         init {
             imageView.submit_delete_text.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            onDeletePhotoListener.onDeletePhotoClick(adapterPosition)
+            //https://www.youtube.com/watch?v=wKFJsrdiGS8
+            //this way, there is no chance of clicking a view holder during
+            // the time it is being deleted
+            val pos = adapterPosition
+            if(pos != RecyclerView.NO_POSITION){
+                onDeletePhotoListener.onDeletePhotoClick(adapterPosition)
+            }
         }
     }
 
@@ -46,7 +52,7 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
 
         //can set more parameters here if desired
 
-        return PhotoAdapter.PhotoViewHolder(imageView, onDeletePhotoListener)
+        return PhotoViewHolder(imageView)
     }
 
     //return the size of the data set,
@@ -59,12 +65,8 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
     //Replace the contents of a view (also invoked by the layout manager)
     override fun onBindViewHolder(holder: PhotoAdapter.PhotoViewHolder, position: Int) {
         // get element from data set (in this case, the URI)
-        // replace the contents of the image view with the new URI
+        // replace the contents of the image view with the new bitmap
         holder.imageView.submit_photo_view.setImageBitmap(photos[position])
-
-        holder.imageView.submit_delete_text.setOnClickListener {
-            photos.removeAt(position)
-        }
     }
 
     interface OnDeletePhotoListener{

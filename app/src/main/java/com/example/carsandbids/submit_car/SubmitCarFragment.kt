@@ -146,9 +146,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         binding.submitClearPhotosButton.setOnClickListener {
             submitCarViewModel.onClrBtnClick()
 
-            val adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
-
-            binding.submitPhotosRecycler.adapter = adapter
+            submit_photos_recycler.adapter!!.notifyItemRangeRemoved(0, submitCarViewModel.imgBitmaps.size)
         }
 
         //call more links as many times as the number of viewModel._extraLinks
@@ -298,7 +296,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         }
 
         //make a new adapter so new images are loaded on and clear helper text
-        submit_photos_recycler.adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
+        submit_photos_recycler.adapter!!.notifyDataSetChanged()
         if (submitCarViewModel.imgBitmaps.isNotEmpty()) {
             submitCarViewModel.photoTextVis.value = View.GONE
             submitCarViewModel.clrBtnVis.value = View.VISIBLE
@@ -385,6 +383,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
     //TODO: Refresh the screen after deleting a photo
     override fun onDeletePhotoClick(position: Int) {
         submitCarViewModel.imgBitmaps.removeAt(position)
-        binding.submitPhotosRecycler.adapter!!.notifyDataSetChanged()
+        submit_photos_recycler.adapter!!.notifyItemRemoved(position)
+        submitCarViewModel.photoTextVisibility()
     }
 }

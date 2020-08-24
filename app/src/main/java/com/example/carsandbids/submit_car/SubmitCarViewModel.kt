@@ -157,4 +157,9 @@ class SubmitCarViewModel : ViewModel() {
         photoTextVis.value = View.VISIBLE
     }
 
+    fun photoTextVisibility(){
+        if(imgBitmaps.isEmpty())
+            photoTextVis.value = View.VISIBLE
+    }
+
 }
