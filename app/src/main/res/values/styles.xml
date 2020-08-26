@@ -27,6 +27,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="textViewError" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="layout_constraintHorizontal_bias">0</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="buttonStyle" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/roboto</item>
@@ -60,7 +70,15 @@
         <item name="android:layout_width">@dimen/edit_width</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="layout_constraintHorizontal_bias">0</item>
+    </style>
+
+    <style name="textLayoutEdit" parent="Widget.Design.TextInputLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="hintEnabled">false</item>
+        <item name="layout_constraintHorizontal_bias">0</item>
         <item name="android:layout_margin">@dimen/space_three</item>
+        <item name="colorError">@android:color/holo_red_light</item>
     </style>
 
     <style name="radioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">

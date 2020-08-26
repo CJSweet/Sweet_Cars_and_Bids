@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +19,22 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.basgeekball.awesomevalidation.AwesomeValidation
+import com.basgeekball.awesomevalidation.ValidationStyle
+import com.basgeekball.awesomevalidation.utility.RegexTemplate
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
 import com.example.carsandbids.links
+import kotlinx.android.synthetic.main.more_links_edit_text.*
 import kotlinx.android.synthetic.main.submit_car.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
+class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, AdapterView.OnItemSelectedListener {
 
     //for adding more links
     private lateinit var parentLayout: LinearLayout
@@ -100,6 +106,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
                 //apply adapter to spinner
                 binding.submitTitleStatusSpinner.adapter = adapter
             }
+        binding.submitTitleStatusSpinner.onItemSelectedListener = this
 
         //bind US state location spinner
         ArrayAdapter.createFromResource(
@@ -112,6 +119,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
 
                 binding.submitTitleLocationUsSpinner.adapter = adapter
             }
+        binding.submitTitleLocationUsSpinner.onItemSelectedListener = this
 
         //bind CAN province location spinner
         ArrayAdapter.createFromResource(
@@ -124,6 +132,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
 
                 binding.submitTitleLocationCanSpinner.adapter = adapter
             }
+        binding.submitTitleLocationCanSpinner.onItemSelectedListener = this
 
         //bind year spinner adapter
         ArrayAdapter(
@@ -136,6 +145,8 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
 
                 binding.submitYearSpinner.adapter = adapter
             }
+        //add year spinner item selected listener
+        binding.submitYearSpinner.onItemSelectedListener = this
 
         //add more lines for user to enter more links
         // based on code from: https://www.tutorialspoint.com/add-and-remove-views-in-android-dynamically
@@ -159,7 +170,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         binding.submitClearPhotosButton.setOnClickListener {
             submitCarViewModel.onClrBtnClick()
 
-            submit_photos_recycler.adapter!!.notifyItemRangeRemoved(
+            binding.submitPhotosRecycler.adapter!!.notifyItemRangeRemoved(
                 0,
                 submitCarViewModel.imgBitmaps.size
             )
@@ -185,15 +196,22 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
             closeMoreLinks()
         }
 
+        //on submit button click
+        binding.submitSubmitButton.setOnClickListener {
+            submitInfo()
+        }
+
         return binding.root
     }
 
-    fun arrayListYears(): ArrayList<Int> {
+    fun arrayListYears(): ArrayList<String> {
 
-        val years = ArrayList<Int>()
+        val years = ArrayList<String>()
+
+        years.add("Choose year")
 
         for (year in 1980..Calendar.getInstance().get(Calendar.YEAR)) {
-            years.add(year)
+            years.add(year.toString())
         }
 
         return years
@@ -400,88 +418,367 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener {
         }
     }
 
-    //TODO: Refresh the screen after deleting a photo
+    //called when user selects a delete text in photos
     override fun onDeletePhotoClick(position: Int) {
         submitCarViewModel.imgBitmaps.removeAt(position)
-        submit_photos_recycler.adapter!!.notifyItemRemoved(position)
+        binding.submitPhotosRecycler.adapter!!.notifyItemRemoved(position)
         submitCarViewModel.photoTextVisibility()
     }
 
+    //TODO: Make the animations more fluid
     private fun openDealerInfo() {
-        val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
-        dropAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                submitCarViewModel.dealerInfoVisible(true)
-            }
+        submitCarViewModel.seeDealerError(false)
+        if(submitCarViewModel.dealerInfoView.value == View.GONE){
+            val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
+            dropAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                    submitCarViewModel.dealerInfoVisible(true)
+                }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                println("animation end")
-            }
+                override fun onAnimationEnd(animation: Animation?) {
+                    println("animation end")
+                }
 
-            override fun onAnimationStart(animation: Animation?) {
-                submitCarViewModel.dealerInfoVisible(true)
-            }
+                override fun onAnimationStart(animation: Animation?) {
+                    submitCarViewModel.dealerInfoVisible(true)
+                }
 
-        })
-        submit_dealer_info_layout.startAnimation(dropAnim)
+            })
+            binding.submitDealerInfoLayout.startAnimation(dropAnim)
+        }
     }
 
     private fun closeDealerInfo() {
-        val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
-        upAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                submitCarViewModel.dealerInfoVisible(false)
-            }
+        submitCarViewModel.seeDealerError(false)
+        if(submitCarViewModel.dealerInfoView.value == View.VISIBLE){
+            val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
+            upAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                    submitCarViewModel.dealerInfoVisible(false)
+                }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                submitCarViewModel.dealerInfoVisible(false)
-            }
+                override fun onAnimationEnd(animation: Animation?) {
+                    submitCarViewModel.dealerInfoVisible(false)
+                }
 
-            override fun onAnimationStart(animation: Animation?) {
-                println("animation start")
-            }
+                override fun onAnimationStart(animation: Animation?) {
+                    println("animation start")
+                }
 
-        })
-        submit_dealer_info_layout.startAnimation(upAnim)
+            })
+            binding.submitDealerInfoLayout.startAnimation(upAnim)
+        }
     }
 
 
     private fun openMoreLinks() {
-        val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
-        dropAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                submitCarViewModel.carListingsVisible(true)
-                println("Open more links repeated")
-            }
+        submitCarViewModel.seeSaleError(false)
+        if(submitCarViewModel.carListingsView.value == View.GONE){
+            val dropAnim = AnimationUtils.loadAnimation(this.activity, R.anim.drop_down)
+            dropAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                    submitCarViewModel.carListingsVisible(true)
+                    println("Open more links repeated")
+                }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                println("animation end")
-            }
+                override fun onAnimationEnd(animation: Animation?) {
+                    println("animation end")
+                }
 
-            override fun onAnimationStart(animation: Animation?) {
-                submitCarViewModel.carListingsVisible(true)
-            }
+                override fun onAnimationStart(animation: Animation?) {
+                    submitCarViewModel.carListingsVisible(true)
+                }
 
-        })
-        submit_sale_elsewhere_layout.startAnimation(dropAnim)
+            })
+            binding.submitSaleElsewhereLayout.startAnimation(dropAnim)
+        }
     }
 
     private fun closeMoreLinks() {
-        val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
-        upAnim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                submitCarViewModel.carListingsVisible(false)
+        submitCarViewModel.seeSaleError(false)
+        if (submitCarViewModel.carListingsView.value == View.VISIBLE){
+            val upAnim = AnimationUtils.loadAnimation(this.activity, R.anim.slide_up)
+            upAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationRepeat(animation: Animation?) {
+                    submitCarViewModel.carListingsVisible(false)
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    submitCarViewModel.carListingsVisible(false)
+                }
+
+                override fun onAnimationStart(animation: Animation?) {
+                    println("animation start")
+                }
+
+            })
+            binding.submitSaleElsewhereLayout.startAnimation(upAnim)
+        }
+    }
+
+    //When submit button clicked, validate, then if valid, send info to database
+    private fun submitInfo(){
+        validate()
+    }
+
+    //Method to check if all fields have been filled out properly
+    //starts at top of submit page and works down, field by field
+    private fun validate(){
+        //this string will be concatenated with non-edit Text fields that need to be selected
+        var invalidString = "Please fill out these fields: \n"
+
+        // PERSON INFO
+
+        //Dealer info
+        //if neither dealer nor private party selected, flag it
+        if(binding.submitDealerRadioGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeDealerError(true)
+        }
+        //if dealer radio button selected, check to make sure all dealer fields have been
+        // filled out properly
+        else if (binding.submitDealerRadioGroup.checkedRadioButtonId == submit_radio_dealer.id){
+            //additional fees
+            if (binding.submitAdditionalFeesEdit.editText?.text.toString().trim().isEmpty()){
+                binding.submitAdditionalFeesEdit.error = "* Please specify fees, or enter no"
+            }
+            else{
+                //if validation okay, set error to null so it does not show or disappears
+                binding.submitAdditionalFeesEdit.isErrorEnabled = false
+            }
+            //Dealer name
+            if(binding.submitDealerNameEdit.editText?.text.toString().isEmpty()){
+                binding.submitDealerNameEdit.error = "* Please enter dealer name"
+            }
+            else{
+                binding.submitDealerNameEdit.isErrorEnabled = false
+            }
+            //Dealer website
+            val dealweb = binding.submitDealerWebsiteEdit.editText?.text.toString().trim()
+            if(dealweb.isEmpty()){
+                binding.submitDealerWebsiteEdit.error = "* Please enter dealer site"
+            }
+            //does not match the URL pattern
+            else if (!Patterns.WEB_URL.matcher(dealweb).matches()){
+                binding.submitDealerWebsiteEdit.error = "* Please enter proper website"
+            }
+            else{
+                binding.submitDealerWebsiteEdit.isErrorEnabled = false
             }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                submitCarViewModel.carListingsVisible(false)
-            }
+        }
 
-            override fun onAnimationStart(animation: Animation?) {
-                println("animation start")
-            }
+        // Seller name
+        val name = binding.submitYourNameEdit.editText?.text.toString().trim()
+        if(name.isEmpty()){
+            binding.submitYourNameEdit.error = "* Please enter a name"
+        }
+        else{
+            binding.submitYourNameEdit.isErrorEnabled = false
+        }
 
-        })
-        submit_sale_elsewhere_layout.startAnimation(upAnim)
+        // Seller contact number
+        val contnumber = binding.submitPhoneEdit.editText?.text.toString().trim()
+        if(contnumber.isEmpty()){
+            binding.submitPhoneEdit.error = "* Please enter a phone number"
+        }
+        else if (!Patterns.PHONE.matcher(contnumber).matches()){
+            binding.submitPhoneEdit.error = "* Invalid phone number"
+        }
+        else{
+            binding.submitPhoneEdit.isErrorEnabled = false
+        }
+
+
+        // CAR DETAILS
+
+        //car sale elsewhere
+        if(binding.submitSaleElsewhereGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeSaleError(true)
+        }
+        else if (submit_sale_elsewhere_group.checkedRadioButtonId == submit_sale_elsewhere_yes_radio.id){
+            //TODO: validate dynamic links entry
+        }
+        else{
+            binding.submitLinkOtherListingsEdit.isErrorEnabled = false
+        }
+
+        //Year
+        if (binding.submitYearSpinner.selectedItem == "Choose year"){
+            submitCarViewModel.seeYearError(true)
+        }
+
+        //Make
+        if (binding.submitMakeEdit.editText?.text.toString().trim().isEmpty()){
+            binding.submitMakeEdit.error = "* Please enter make"
+        }
+        else{
+            binding.submitMakeEdit.isErrorEnabled = false
+        }
+
+        //Model
+        if(binding.submitModelEdit.editText?.text.toString().trim().isEmpty()){
+            binding.submitModelEdit.error = "* Please enter model"
+        }
+        else{
+            binding.submitModelEdit.isErrorEnabled = false
+        }
+
+        //VIN
+        if (binding.submitVinEdit.editText?.text.toString().trim().isEmpty()){
+            binding.submitVinEdit.error = "* Please enter VIN"
+        }
+        else{
+            binding.submitVinEdit.isErrorEnabled = false
+        }
+
+        //Mileage
+        if (binding.submitMileageEdit.editText?.text.toString().trim().isEmpty()){
+            binding.submitMileageEdit.error = "* Please enter mileage"
+        }
+        else{
+            binding.submitMileageEdit.isErrorEnabled = false
+        }
+
+        //Car Location Radio`
+        if(binding.submitCarLocationGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeCarLocError(true)
+        }
+        else if (binding.submitCarLocationGroup.checkedRadioButtonId == binding.submitCarLocationUsRadio.id){
+            if (binding.submitCarLocationUsZipEdit.editText?.text.toString().trim().isEmpty()){
+                binding.submitCarLocationUsZipEdit.error ="* Must enter a Zip code"
+            }
+            else if (binding.submitCarLocationUsZipEdit.editText?.text.toString().trim().length < 5){
+                binding.submitCarLocationUsZipEdit.error = "* Entered Zip is to short"
+            }
+            else{
+                binding.submitCarLocationUsZipEdit.isErrorEnabled = false
+            }
+        }
+        else if (binding.submitCarLocationGroup.checkedRadioButtonId == binding.submitCarLocationCanRadio.id){
+            if (binding.submitCarLocationCanEdit.editText?.text.toString().trim().isEmpty()){
+                binding.submitCarLocationCanEdit.error = "* Please enter city/province"
+            }
+            else{
+                binding.submitCarLocationCanEdit.isErrorEnabled = false
+            }
+        }
+
+        //Noteworthy Features and Options
+        if(binding.submitNoteworthyEdit.editText?.text.toString().isEmpty()){
+            binding.submitNoteworthyEdit.error = "* Please provide some features"
+        }
+        else {
+            binding.submitNoteworthyEdit.isErrorEnabled = false
+        }
+
+        //Been modified radio group
+        if(binding.submitModifiedGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeCarModError(true)
+        }
+        else if(binding.submitModifiedGroup.checkedRadioButtonId == binding.submitModifiedRadio.id){
+            if (binding.submitCarModifiedEdit.editText?.text.toString().trim().isEmpty()){
+                binding.submitCarModifiedEdit.error ="* Please specify modifications"
+            }
+            else{
+                binding.submitCarModifiedEdit.isErrorEnabled = false
+            }
+        }
+
+        // TITLE INFO
+        //where is car titled radio
+        if (binding.submitTitleLocationGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeTitleLocError(true)
+        }
+        else if (binding.submitTitleLocationGroup.checkedRadioButtonId == binding.submitTitleLocationUsRadio.id){
+            if (binding.submitTitleLocationUsSpinner.selectedItem == "Select state"){
+                submitCarViewModel.seeTitleLocSpinError(true)
+            }
+        }
+        else if (binding.submitTitleLocationGroup.checkedRadioButtonId == binding.submitTitleLocationCanRadio.id){
+            if(binding.submitTitleLocationCanSpinner.selectedItem == "Select a province"){
+                submitCarViewModel.seeTitleLocSpinError(true)
+            }
+        }
+
+        //Title in who's name?
+        //dont care about if user name is on the title, only check if
+        // radio unchecked, or if user name not on title
+        if (binding.submitTitleWhosNameGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeTitleNameError(true)
+        }
+        else if (binding.submitTitleWhosNameGroup.checkedRadioButtonId == binding.submitTitleWhosNameRadioNo.id){
+            if (binding.submitNameOnTitleEdit.editText?.text.toString().isEmpty()){
+                binding.submitNameOnTitleEdit.error = "* Please enter the name on title"
+            }
+            else{
+                binding.submitNameOnTitleEdit.isErrorEnabled = false
+            }
+        }
+
+        //lienholder
+        if(binding.submitLienholderGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeLienError(true)
+        }
+
+        //Title status
+        if(binding.submitTitleStatusSpinner.selectedItem == "Choose"){
+            submitCarViewModel.seeTitleStatusError(true)
+        }
+
+
+        //RESERVE PRICE
+        if(binding.submitReserveGroup.checkedRadioButtonId == -1){
+            submitCarViewModel.seeReserveError(true)
+        }
+        else if (binding.submitReserveGroup.checkedRadioButtonId == binding.submitReserveRadioYes.id){
+            if(binding.submitReserveAPriceEdit.editText?.text.toString().isEmpty()){
+                binding.submitReserveAPriceEdit.error = "* Please specify reserve"
+            }
+            else {
+                binding.submitReserveAPriceEdit.isErrorEnabled = false
+            }
+        }
+
+        //PHOTOS
+        //must be between 8-16 photos
+        if (submitCarViewModel.imgBitmaps.size > 16){
+            submitCarViewModel.seePhotoError(true)
+            binding.submitPhotosError.setText(getString(R.string.too_many_photos_error))
+        }
+        else if (submitCarViewModel.imgBitmaps.size < 8){
+            submitCarViewModel.seePhotoError(true)
+            binding.submitPhotosError.setText(getString(R.string.not_enough_photos_error))
+        }
+        else{
+            submitCarViewModel.seePhotoError(false)
+        }
+
+        //Validation for referral not necessary
+    }
+
+    //onNothingSelected and onItemSelected for Spinner selections
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        //nothing to do
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when(parent!!.id){
+            binding.submitYearSpinner.id -> {
+                if (position != 0)
+                    submitCarViewModel.seeYearError(false)
+            }
+            binding.submitTitleLocationUsSpinner.id ->{
+                if(position != 0)
+                    submitCarViewModel.seeTitleLocSpinError(false)
+            }
+            binding.submitTitleLocationCanSpinner.id ->{
+                if(position != 0)
+                    submitCarViewModel.seeTitleLocSpinError(false)
+            }
+            binding.submitTitleStatusSpinner.id -> {
+                if (position != 0)
+                    submitCarViewModel.seeTitleStatusError(false)
+            }
+        }
     }
 }

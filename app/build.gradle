@@ -57,4 +57,9 @@ dependencies {
     // For control over item selection of both touch and mouse  driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
 
+    //Validation package
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
+
+
 }
