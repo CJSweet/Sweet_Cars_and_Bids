@@ -4,18 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.MimeTypeMap
 import android.widget.*
+import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
@@ -28,11 +33,17 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
 import com.example.carsandbids.links
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.more_links_edit_text.*
 import kotlinx.android.synthetic.main.submit_car.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
+//TODO: more than 80 views in XML, maybe convert to recycler view?
+//TODO: Document variables and functions/methods
 
 class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, AdapterView.OnItemSelectedListener {
 
@@ -204,6 +215,8 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         return binding.root
     }
 
+    // figure out the years array needed for array spinner
+    // TODO: Maybe need to include the upcoming year for brand new models?
     fun arrayListYears(): ArrayList<String> {
 
         val years = ArrayList<String>()
@@ -217,6 +230,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         return years
     }
 
+    // on clicking "+ Add more links text" dynamically add links (EditText) to UI
     fun moreLinks() {
         val inflater =
             this.requireActivity()
@@ -239,7 +253,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
     }
 
     //to get photo, first need permission
-    //code for this method and following 2 from:
+    //code for this method and following 2 methods from:
     // https://stackoverflow.com/questions/55933590/select-photo-on-gallery-kotlin
     fun checkPhotoPermission() {
         //version must be greater than Marshmallow
@@ -278,7 +292,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
     }
 
     //now must override the startActivityResult function so we can return image
-    @RequiresApi(Build.VERSION_CODES.P)
+    // from camera or from gallery, and put into array for viewing and sending to storage
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -297,7 +311,11 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                                     val bitmap = MediaStore.Images.Media.getBitmap(
                                         requireContext().contentResolver, imageUri
                                     )
-                                    submitCarViewModel.imgBitmaps.add(bitmap)
+                                    val stream = ByteArrayOutputStream()
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
+                                    val byteArray = stream.toByteArray()
+                                    val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                                    submitCarViewModel.imgBitmaps.add(resizeBitmap)
                                 }
 
                             }
@@ -308,8 +326,12 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                                         requireContext().contentResolver,
                                         imageUri!!
                                     )
+                                    val stream = ByteArrayOutputStream()
                                     val bitmap = ImageDecoder.decodeBitmap(source)
-                                    submitCarViewModel.imgBitmaps.add(bitmap)
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
+                                    var byteArray = stream.toByteArray()
+                                    val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                                    submitCarViewModel.imgBitmaps.add(resizeBitmap)
                                 }
                             }
                         }
@@ -321,13 +343,21 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                         val cameraBitmap = MediaStore.Images.Media.getBitmap(
                             requireContext().contentResolver, cameraUri
                         )
-                        submitCarViewModel.imgBitmaps.add(cameraBitmap)
+                        val stream = ByteArrayOutputStream()
+                        cameraBitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
+                        val byteArray = stream.toByteArray()
+                        val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                        submitCarViewModel.imgBitmaps.add(resizeBitmap)
                     }
                     else -> {
                         val source =
                             ImageDecoder.createSource(requireContext().contentResolver, cameraUri!!)
                         val cameraBitmap = ImageDecoder.decodeBitmap(source)
-                        submitCarViewModel.imgBitmaps.add(cameraBitmap)
+                        val stream = ByteArrayOutputStream()
+                        cameraBitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
+                        var byteArray = stream.toByteArray()
+                        val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                        submitCarViewModel.imgBitmaps.add(resizeBitmap)
                     }
                 }
             }
@@ -448,6 +478,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         }
     }
 
+    // close dealer info animation
     private fun closeDealerInfo() {
         submitCarViewModel.seeDealerError(false)
         if(submitCarViewModel.dealerInfoView.value == View.VISIBLE){
@@ -470,7 +501,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         }
     }
 
-
+    //opening links animation
     private fun openMoreLinks() {
         submitCarViewModel.seeSaleError(false)
         if(submitCarViewModel.carListingsView.value == View.GONE){
@@ -494,6 +525,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         }
     }
 
+    //more links closing animation
     private fun closeMoreLinks() {
         submitCarViewModel.seeSaleError(false)
         if (submitCarViewModel.carListingsView.value == View.VISIBLE){
@@ -518,7 +550,9 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
 
     //When submit button clicked, validate, then if valid, send info to database
     private fun submitInfo(){
-        validate()
+        //validate()
+
+        submitCarViewModel.uploadImage(requireContext().applicationContext)
     }
 
     //Method to check if all fields have been filled out properly
@@ -761,6 +795,8 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //nothing to do
     }
 
+    //if any item except for the first item is selected in any spinner, make sure
+    // visibility of errors are gone
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when(parent!!.id){
             binding.submitYearSpinner.id -> {

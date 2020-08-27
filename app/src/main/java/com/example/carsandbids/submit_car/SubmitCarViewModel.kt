@@ -1,11 +1,20 @@
 package com.example.carsandbids.submit_car
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
+import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 class SubmitCarViewModel : ViewModel() {
@@ -119,6 +128,9 @@ class SubmitCarViewModel : ViewModel() {
     //arraylist for the photos added to submit page
     var imgBitmaps = ArrayList<Bitmap>()
 
+    //Declaring a storage reference to upload images to storage
+    private lateinit var storageRef: StorageReference
+
 
     //initialize all variable views to GONE
     init {
@@ -149,6 +161,9 @@ class SubmitCarViewModel : ViewModel() {
         _titleStatusError.value = View.GONE
         _reserveError.value = View.GONE
         _photoError.value = View.GONE
+
+        //initialize storage reference
+        storageRef = FirebaseStorage.getInstance().getReference("images")
     }
 
     //if user selects dealer as seller, then display dealer info views
@@ -257,74 +272,118 @@ class SubmitCarViewModel : ViewModel() {
             _saleError.value = View.GONE
     }
 
-    fun seeYearError(see: Boolean){
+    fun seeYearError(see: Boolean) {
         if (see)
             _yearError.value = View.VISIBLE
         else
             _yearError.value = View.GONE
     }
 
-    fun seeCarLocError(see: Boolean){
+    fun seeCarLocError(see: Boolean) {
         if (see)
             _carLocError.value = View.VISIBLE
         else
             _carLocError.value = View.GONE
     }
 
-    fun seeCarModError(see: Boolean){
-        if(see)
+    fun seeCarModError(see: Boolean) {
+        if (see)
             _modGroupError.value = View.VISIBLE
         else
             _modGroupError.value = View.GONE
     }
 
-    fun seeTitleLocError(see: Boolean){
-        if(see)
+    fun seeTitleLocError(see: Boolean) {
+        if (see)
             _titleLocError.value = View.VISIBLE
         else
             _titleLocError.value = View.GONE
     }
 
-    fun seeTitleLocSpinError(see: Boolean){
+    fun seeTitleLocSpinError(see: Boolean) {
         if (see)
             _titleLocSpinError.value = View.VISIBLE
         else
             _titleLocSpinError.value = View.GONE
     }
 
-    fun seeTitleNameError(see: Boolean){
-        if(see)
+    fun seeTitleNameError(see: Boolean) {
+        if (see)
             _titleNameError.value = View.VISIBLE
         else
             _titleNameError.value = View.GONE
     }
 
-    fun seeLienError(see: Boolean){
-        if(see)
+    fun seeLienError(see: Boolean) {
+        if (see)
             _lienError.value = View.VISIBLE
         else
             _lienError.value = View.GONE
     }
 
-    fun seeTitleStatusError(see: Boolean){
-        if(see)
+    fun seeTitleStatusError(see: Boolean) {
+        if (see)
             _titleStatusError.value = View.VISIBLE
         else
             _titleStatusError.value = View.GONE
     }
 
-    fun seeReserveError(see: Boolean){
-        if(see)
+    fun seeReserveError(see: Boolean) {
+        if (see)
             _reserveError.value = View.VISIBLE
         else
             _reserveError.value = View.GONE
     }
 
-    fun seePhotoError(see: Boolean){
+    fun seePhotoError(see: Boolean) {
         if (see)
             _photoError.value = View.VISIBLE
         else
             _photoError.value = View.GONE
     }
 
+
+//    private fun getFileExtension(bitmap: Bitmap, context: Context): String {
+//        val cR = context.contentResolver
+//        val mime = MimeTypeMap.getSingleton()
+//        return mime.getExtensionFromMimeType(cR.getType(cameraUri!!))!!
+//    }
+
+
+    fun uploadImage(context: Context) {
+
+        //from documentation
+        for (photo in 0 until imgBitmaps.size) {
+            viewModelScope.launch {
+                //since storageRef points to the "images" folder, this no makes a child of images with a name of currentTimeMills() . file extension
+                val fileRef = storageRef.child(System.currentTimeMillis().toString() + "." + "jpg")
+
+                //convert bitmap to URI
+                //https://freakycoder.com/android-notes-72-how-to-convert-bitmap-to-uri-e535391ebdac
+                val path = MediaStore.Images.Media.insertImage(
+                    context.contentResolver,
+                    imgBitmaps[photo],
+                    "picture",
+                    null
+                )
+
+                fileRef.putFile(Uri.parse(path.toString()))
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Success!!", Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                    }
+                    .addOnProgressListener {
+                        Toast.makeText(context, "Uploading...", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val downloadUri = it.result
+                            println(downloadUri.toString())
+                        }
+                    }
+            }
+        }
+    }
 }
