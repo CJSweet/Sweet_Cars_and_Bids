@@ -1,23 +1,13 @@
 package com.example.carsandbids.submit_car
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carsandbids.R
-import kotlinx.android.synthetic.main.photo_item.view.*
-import kotlinx.android.synthetic.main.submit_car.view.*
+import kotlinx.android.synthetic.main.submit_photo_item.view.*
 
 class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListener: OnDeletePhotoListener) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
@@ -48,7 +38,7 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
 
         //create a new view
         val imageView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.photo_item, parent, false) as LinearLayout
+            .inflate(R.layout.submit_photo_item, parent, false) as LinearLayout
 
         //can set more parameters here if desired
 

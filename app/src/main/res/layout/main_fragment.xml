@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_text"
         android:layout_margin="5dp"
-        tools:listitem="@layout/main_tile"
+        tools:listitem="@layout/main_listing_tile"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

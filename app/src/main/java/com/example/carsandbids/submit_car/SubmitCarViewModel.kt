@@ -12,6 +12,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.launch
@@ -131,6 +134,8 @@ class SubmitCarViewModel : ViewModel() {
     //Declaring a storage reference to upload images to storage
     private lateinit var storageRef: StorageReference
 
+    //Declaring a firestore reference to upload all data
+    private lateinit var firestore: FirebaseFirestore
 
     //initialize all variable views to GONE
     init {
@@ -164,6 +169,9 @@ class SubmitCarViewModel : ViewModel() {
 
         //initialize storage reference
         storageRef = FirebaseStorage.getInstance().getReference("images")
+
+        //initialize firestore reference
+        firestore = Firebase.firestore
     }
 
     //if user selects dealer as seller, then display dealer info views
@@ -351,7 +359,14 @@ class SubmitCarViewModel : ViewModel() {
 
 
     //structure of function from: https://www.youtube.com/watch?v=lPfQN-Sfnjw&t=884s
-    fun uploadImage(context: Context) {
+    fun uploadImage(
+        context: Context,
+        yourInfo: YourInfo,
+        carDetails: CarDetails,
+        titleInfo: TitleInfo,
+        reservePrice: ReservePrice,
+        referral: Referral
+    ) {
 
         /*
             FIXME: Takes a very long time to upload the photos, is there a better, more efficient/faster
@@ -359,8 +374,10 @@ class SubmitCarViewModel : ViewModel() {
          */
 
         //from documentation
-        for (photo in 0 until imgBitmaps.size) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            var imgUrls = ArrayList<String>()
+
+            for (photo in 0 until imgBitmaps.size) {
 
                 //convert bitmap to URI
                 //https://freakycoder.com/android-notes-72-how-to-convert-bitmap-to-uri-e535391ebdac
@@ -374,7 +391,12 @@ class SubmitCarViewModel : ViewModel() {
                 val uri = Uri.parse(path)
 
                 //since storageRef points to the "images" folder, this no makes a child of images with a name of currentTimeMills() . file extension
-                val fileRef = storageRef.child(System.currentTimeMillis().toString() + "." + getFileExtension(context, uri))
+                val fileRef = storageRef.child(
+                    System.currentTimeMillis().toString() + "." + getFileExtension(
+                        context,
+                        uri
+                    )
+                )
 
                 fileRef.putFile(uri)
                     .addOnSuccessListener {
@@ -390,9 +412,27 @@ class SubmitCarViewModel : ViewModel() {
                         if (it.isSuccessful) {
                             val downloadUri = it.result?.uploadSessionUri.toString()
                             Toast.makeText(context, downloadUri, Toast.LENGTH_SHORT).show()
+                            imgUrls.add(downloadUri)
                         }
                     }
             }
+
+            val allInfo = AllInfo(
+                yourInfo,
+                carDetails,
+                titleInfo,
+                reservePrice,
+                imgUrls,
+                referral
+            )
+
+            val id = System.currentTimeMillis().toString()
+
+            //Upload info to database
+            firestore.collection("Submitted Cars")
+                .document(id)
+                .set(allInfo)
+
         }
     }
 }

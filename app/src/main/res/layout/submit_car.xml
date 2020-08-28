@@ -71,35 +71,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_title_descript">
 
-
-                    <ImageView
-                        android:id="@+id/submit_info_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="@dimen/space_three"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@id/submit_your_info_subtitle"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:id="@+id/submit_your_info_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/submit_constraint_background"
+                        android:drawablePadding="6dp"
                         android:text="@string/submit_your_info_subtitle"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/submit_info_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/submit_info_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                     <!--    Dealer or private party?-->
                     <TextView
@@ -136,13 +118,13 @@
                     </RadioGroup>
 
                     <TextView
-                        style="@style/textViewError"
                         android:id="@+id/submit_dealer_radio_error"
-                        android:visibility="@{viewModel.dealerError}"
+                        style="@style/textViewError"
                         android:text="@string/select_dealer_error"
-                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_radio_group"
+                        android:visibility="@{viewModel.dealerError}"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_dealer_radio_group" />
 
                     <!--                    Dealership info-->
 
@@ -287,7 +269,7 @@
                         app:layout_constraintTop_toBottomOf="@id/submit_phone">
 
 
-                        -<com.google.android.material.textfield.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             style="@style/editTextStyle"
                             android:inputType="phone"
                             android:maxLength="10" />
@@ -321,35 +303,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_info_constraint">
 
-
-                    <ImageView
-                        android:id="@+id/submit_detail_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@+id/submit_car_details_subtitle"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:id="@+id/submit_car_details_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_ten"
+                        android:drawablePadding="6dp"
                         android:text="@string/submit_car_details_subtitle"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/submit_detail_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/submit_detail_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <!--    Is car for sale elsewhere?-->
@@ -391,11 +355,11 @@
                     <TextView
                         android:id="@+id/submit_sale_elsewhere_error"
                         style="@style/textViewError"
-                        android:visibility="@{viewModel.saleError}"
                         android:text="@string/submit_sold_elsewhere_error"
-                        app:layout_constraintTop_toBottomOf="@id/submit_sale_elsewhere_group"
+                        android:visibility="@{viewModel.saleError}"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_sale_elsewhere_group" />
 
                     <!--                    Info on where else the car is being sold-->
 
@@ -494,9 +458,9 @@
                         style="@style/textViewError"
                         android:text="@string/submit_year_error"
                         android:visibility="@{viewModel.yearError}"
-                        app:layout_constraintTop_toBottomOf="@id/submit_year_spinner"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_year_spinner" />
 
                     <!--    Make and Model-->
                     <!--    Make-->
@@ -641,13 +605,13 @@
                     </RadioGroup>
 
                     <TextView
+                        android:id="@+id/submit_car_location_group_error"
                         style="@style/textViewError"
                         android:text="@string/select_country_error"
-                        android:id="@+id/submit_car_location_group_error"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="@{viewModel.carLocError}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_group"
-                        android:visibility="@{viewModel.carLocError}"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_car_location_group" />
 
 
                     <!--                    If US, ask for ZIP code, if CAN ask for City/Province-->
@@ -698,8 +662,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/submit_car_location_us_zip_text">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            style="@style/editTextStyle" />
+                        <com.google.android.material.textfield.TextInputEditText style="@style/editTextStyle" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -770,13 +733,13 @@
                     </RadioGroup>
 
                     <TextView
+                        android:id="@+id/submit_modified_group_error"
                         style="@style/textViewError"
                         android:text="@string/submit_stock_or_mod_error"
-                        app:layout_constraintTop_toBottomOf="@id/submit_modified_group"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:visibility="@{viewModel.modGroupError}"
-                        android:id="@+id/submit_modified_group_error"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_modified_group" />
 
                     <TextView
                         android:id="@+id/submit_car_modified_text"
@@ -829,34 +792,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_car_details_constraint">
 
-
-                    <ImageView
-                        android:id="@+id/submit_title_info_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@+id/submit_info_title_subtitle"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <!--    Section: Title Info-->
                     <TextView
                         android:id="@+id/submit_info_title_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="6dp"
                         android:text="@string/title_info"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_title_info_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/submit_title_info_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <!--    Where is car titled? US or CAN-->
@@ -897,11 +843,11 @@
                     <TextView
                         android:id="@+id/submit_title_location_group_error"
                         style="@style/textViewError"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_group"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/select_country_error"
-                        android:visibility="@{viewModel.titleLocError}"/>
+                        android:visibility="@{viewModel.titleLocError}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_group" />
 
                     <!--                    location of title details-->
 
@@ -947,12 +893,12 @@
 
                     <TextView
                         android:id="@+id/submit_title_location_spinner_error_us"
-                        android:text="@string/select_title_loc_error"
                         style="@style/textViewError"
+                        android:text="@string/select_title_loc_error"
                         android:visibility="@{viewModel.titleLocSpinError}"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_us_spinner"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_us_spinner" />
 
 
                     <!--    Is vehicle title in your name?-->
@@ -964,7 +910,7 @@
                         android:text="@string/title_in_your_name"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_spinner_error_us"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_location_spinner_error_us" />
 
                     <RadioGroup
                         android:id="@+id/submit_title_whos_name_group"
@@ -995,9 +941,9 @@
                         style="@style/textViewError"
                         android:text="@string/select_option_error"
                         android:visibility="@{viewModel.titleNameError}"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_whos_name_group"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_whos_name_group" />
 
                     <!--                    if title not in user name, who's name is on it?-->
 
@@ -1048,15 +994,15 @@
                         <RadioButton
                             android:id="@+id/submit_lienholder_radio_yes"
                             style="@style/radioButtonStyle"
-                            android:onClick="@{()->viewModel.seeLienError(false)}"
                             android:background="@drawable/radio_selector"
+                            android:onClick="@{()->viewModel.seeLienError(false)}"
                             android:text="@string/yes" />
 
                         <RadioButton
                             android:id="@+id/submit_lienholder_radio_no"
                             style="@style/radioButtonStyle"
-                            android:onClick="@{()->viewModel.seeLienError(false)}"
                             android:background="@drawable/radio_selector"
+                            android:onClick="@{()->viewModel.seeLienError(false)}"
                             android:text="@string/no" />
                     </RadioGroup>
 
@@ -1065,9 +1011,9 @@
                         style="@style/textViewError"
                         android:text="@string/select_option_error"
                         android:visibility="@{viewModel.lienError}"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_lienholder_group"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_lienholder_group" />
 
                     <!--    What is the title's status-->
                     <TextView
@@ -1092,9 +1038,9 @@
                         style="@style/textViewError"
                         android:text="@string/title_status_error"
                         android:visibility="@{viewModel.titleStatusError}"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_title_status_spinner"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_title_status_spinner" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1113,33 +1059,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_title_info_constraint">
 
-                    <ImageView
-                        android:id="@+id/submit_reserve_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@+id/submit_reserve_subtitle"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <!--    Section: Reserve Price-->
                     <TextView
                         android:id="@+id/submit_reserve_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="6dp"
                         android:text="@string/reserve_price"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_reserve_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/submit_reserve_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                     <!--    Do you want a min price to sell?-->
                     <TextView
@@ -1181,9 +1111,9 @@
                         style="@style/textViewError"
                         android:text="@string/select_option_error"
                         android:visibility="@{viewModel.reserveError}"
-                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_group"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/submit_reserve_group" />
 
                     <TextView
                         android:id="@+id/submit_reserve_what_price_text"
@@ -1228,33 +1158,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_reserve_constraint">
 
-                    <ImageView
-                        android:id="@+id/submit_photos_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@+id/submit_photos_subtitle"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <!--    Section: Photos-->
                     <TextView
                         android:id="@+id/submit_photos_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="6dp"
                         android:text="@string/photos"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_photos_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/submit_photos_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                     <!--    8 to 16 photos can be uploaded on the website-->
 
@@ -1286,10 +1200,10 @@
                     <TextView
                         android:id="@+id/submit_photos_error"
                         style="@style/textViewError"
-                        app:layout_constraintTop_toBottomOf="@id/submit_photos_recycler"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="@{viewModel.photoError}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:visibility="@{viewModel.photoError}"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/submit_photos_recycler" />
 
                     <Button
                         android:id="@+id/submit_select_photos_button"
@@ -1334,34 +1248,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/submit_photos_constraint">
 
-                    <ImageView
-                        android:id="@+id/submit_referral_tab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_three"
-                        android:layout_marginTop="4dp"
-                        android:paddingStart="@dimen/space_three"
-                        android:paddingTop="@dimen/space_three"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="@dimen/space_three"
-                        android:src="@drawable/submit_car_tab"
-                        app:layout_constraintEnd_toStartOf="@+id/submit_referral_subtitle"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <!--    Section: Referral-->
                     <TextView
                         android:id="@+id/submit_referral_subtitle"
                         style="@style/textViewStyle.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="6dp"
                         android:text="@string/referral"
                         android:textSize="@dimen/subtitle_size"
-                        app:layout_constraintBaseline_toBaselineOf="@id/submit_referral_tab"
+                        app:drawableStartCompat="@drawable/submit_car_tab"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/submit_referral_tab"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <!--    How did you hear about us? If user referred, name them-->
@@ -1375,18 +1273,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/submit_referral_subtitle" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
                         android:id="@+id/submit_referral_edit"
-                        style="@style/textLayoutEdit"
+                        style="@style/editTextStyle"
+                        android:layout_width="300dp"
+                        android:inputType="textCapSentences"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/submit_referral_text">
+                        app:layout_constraintTop_toBottomOf="@id/submit_referral_text" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            style="@style/editTextStyle"
-                            android:layout_width="300dp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

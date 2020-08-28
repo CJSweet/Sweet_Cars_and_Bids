@@ -11,38 +11,27 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.webkit.MimeTypeMap
 import android.widget.*
-import androidx.annotation.NonNull
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.basgeekball.awesomevalidation.AwesomeValidation
-import com.basgeekball.awesomevalidation.ValidationStyle
-import com.basgeekball.awesomevalidation.utility.RegexTemplate
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
 import com.example.carsandbids.links
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import kotlinx.android.synthetic.main.more_links_edit_text.*
 import kotlinx.android.synthetic.main.submit_car.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
 //FIXME: more than 80 views in XML, maybe convert to recycler view?
+//  or maybe ViewStubs for error messages? (Counted roughly 130 views......wayyyy to many)
 //TODO: Document variables and functions/methods
 
 class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, AdapterView.OnItemSelectedListener {
@@ -235,7 +224,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         val inflater =
             this.requireActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
-        val newEditView: View = inflater!!.inflate(R.layout.more_links_edit_text, null)
+        val newEditView: View = inflater!!.inflate(R.layout.submit_more_links_edit_text, null)
 
         //get proper dimen value from dimen resource xml
         // from: https://stackoverflow.com/questions/11121028/load-dimension-value-from-res-values-dimension-xml-from-source-code
@@ -561,9 +550,53 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
 
     //When submit button clicked, validate, then if valid, send info to database
     private fun submitInfo(){
-        //validate()
+        //validate that all fields have been entered properly
+        validate()
 
-        submitCarViewModel.uploadImage(requireContext().applicationContext)
+        val yourInfo = YourInfo(
+            binding.submitYourNameEdit.editText!!.text.trim().toString(),
+            binding.submitPhoneEdit.editText!!.text.trim().toString(),
+            binding.submitAdditionalFeesEdit.editText?.text?.trim().toString(),
+            binding.submitDealerNameEdit.editText?.text?.trim().toString(),
+            binding.submitDealerWebsiteEdit.editText?.text?.trim().toString()
+        )
+
+
+        val carDetails = CarDetails(
+            binding.submitSaleElsewhereYesRadio.isChecked,
+            binding.submitYearSpinner.selectedItem.toString(),
+            binding.submitMakeEdit.editText!!.text.trim().toString(),
+            binding.submitModelEdit.editText!!.text.trim().toString(),
+            binding.submitVinEdit.editText!!.text.trim().toString(),
+            binding.submitMileageEdit.editText!!.text.trim().toString(),
+            "Portland, Oregon",
+            binding.submitNoteworthyEdit.editText!!.text.trim().toString(),
+            binding.submitCarModifiedEdit.editText?.text?.trim().toString()
+        )
+
+        val titleInfo = TitleInfo(
+            "Portland, Oregon",
+            binding.submitNameOnTitleEdit.editText?.text?.trim().toString(),
+            binding.submitLienholderRadioYes.isChecked,
+            binding.submitTitleStatusSpinner.selectedItem.toString()
+        )
+
+        val reservePrice = ReservePrice(
+            binding.submitReserveAPriceEdit.editText?.text?.trim().toString()
+        )
+
+        val referral = Referral(
+            binding.submitReferralEdit.text?.trim().toString()
+        )
+
+        //upload image to storage, then once complete, upload information to database
+        submitCarViewModel.uploadImage(
+            requireContext().applicationContext,
+            yourInfo,
+            carDetails,
+            titleInfo,
+            reservePrice,
+            referral)
     }
 
     //Method to check if all fields have been filled out properly
