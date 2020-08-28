@@ -1,5 +1,6 @@
 package com.example.carsandbids
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
@@ -7,12 +8,29 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.example.carsandbids.mainpage.MainFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        //set up bot nav bar with nav_graph, got code from: https://www.youtube.com/watch?v=pT_4rV3gO78
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bot_nav_bar)
+        val navController = findNavController(this, R.id.nav_host_fragment)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
 
     //for the ability to remove focus from editText after tapping away

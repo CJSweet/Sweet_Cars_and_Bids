@@ -343,20 +343,24 @@ class SubmitCarViewModel : ViewModel() {
     }
 
 
-//    private fun getFileExtension(bitmap: Bitmap, context: Context): String {
-//        val cR = context.contentResolver
-//        val mime = MimeTypeMap.getSingleton()
-//        return mime.getExtensionFromMimeType(cR.getType(cameraUri!!))!!
-//    }
+    private fun getFileExtension(context: Context, uri: Uri): String {
+        val cR = context.contentResolver
+        val mime = MimeTypeMap.getSingleton()
+        return mime.getExtensionFromMimeType(cR.getType(uri))!!
+    }
 
 
+    //structure of function from: https://www.youtube.com/watch?v=lPfQN-Sfnjw&t=884s
     fun uploadImage(context: Context) {
+
+        /*
+            FIXME: Takes a very long time to upload the photos, is there a better, more efficient/faster
+                way to do it?
+         */
 
         //from documentation
         for (photo in 0 until imgBitmaps.size) {
             viewModelScope.launch {
-                //since storageRef points to the "images" folder, this no makes a child of images with a name of currentTimeMills() . file extension
-                val fileRef = storageRef.child(System.currentTimeMillis().toString() + "." + "jpg")
 
                 //convert bitmap to URI
                 //https://freakycoder.com/android-notes-72-how-to-convert-bitmap-to-uri-e535391ebdac
@@ -367,7 +371,12 @@ class SubmitCarViewModel : ViewModel() {
                     null
                 )
 
-                fileRef.putFile(Uri.parse(path.toString()))
+                val uri = Uri.parse(path)
+
+                //since storageRef points to the "images" folder, this no makes a child of images with a name of currentTimeMills() . file extension
+                val fileRef = storageRef.child(System.currentTimeMillis().toString() + "." + getFileExtension(context, uri))
+
+                fileRef.putFile(uri)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Success!!", Toast.LENGTH_LONG).show()
                     }
@@ -379,8 +388,8 @@ class SubmitCarViewModel : ViewModel() {
                     }
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val downloadUri = it.result
-                            println(downloadUri.toString())
+                            val downloadUri = it.result?.uploadSessionUri.toString()
+                            Toast.makeText(context, downloadUri, Toast.LENGTH_SHORT).show()
                         }
                     }
             }

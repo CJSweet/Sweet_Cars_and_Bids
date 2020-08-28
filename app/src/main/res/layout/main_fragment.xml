@@ -16,6 +16,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="THIS IS THE HOME PAGE"
+        android:id="@+id/home_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_grid"
         android:layout_width="0dp"
@@ -23,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_text"
         android:layout_margin="5dp"
         tools:listitem="@layout/main_tile"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

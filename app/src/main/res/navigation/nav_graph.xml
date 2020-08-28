@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/submitCarFragment">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/submitCarFragment"
         android:name="com.example.carsandbids.submit_car.SubmitCarFragment"
-        android:label="SubmitCarFragment" />
+        android:label="SubmitCarFragment" >
+        <action
+            android:id="@+id/action_submitCarFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.carsandbids.mainpage.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_submitCarFragment"
+            app:destination="@id/submitCarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.carsandbids.about_fragment.AboutFragment"
+        android:label="AboutFragment" />
 </navigation>

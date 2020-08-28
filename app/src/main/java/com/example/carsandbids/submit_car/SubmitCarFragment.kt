@@ -42,7 +42,7 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
-//TODO: more than 80 views in XML, maybe convert to recycler view?
+//FIXME: more than 80 views in XML, maybe convert to recycler view?
 //TODO: Document variables and functions/methods
 
 class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, AdapterView.OnItemSelectedListener {
@@ -293,6 +293,9 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
 
     //now must override the startActivityResult function so we can return image
     // from camera or from gallery, and put into array for viewing and sending to storage
+    /*FIXME: When image is resized, it is added to image gallery, thus, I now have the same image
+        but saved twice for two different sizes
+    * */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -307,14 +310,21 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                             //getBitmap is deprecated after SDK 28
                             Build.VERSION.SDK_INT < 28 -> {
                                 for (photo in 0 until clipData.itemCount) {
+                                    //get URI from gallery
                                     val imageUri = clipData.getItemAt(photo).uri
+                                    //get bitmap from uri
                                     val bitmap = MediaStore.Images.Media.getBitmap(
                                         requireContext().contentResolver, imageUri
                                     )
+                                    //create byte array output stream for compression
                                     val stream = ByteArrayOutputStream()
+                                    //compress bitmap to 20% quality of original, placing in stream
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
+                                    //stream to byte array
                                     val byteArray = stream.toByteArray()
+                                    // get new bitmap from byte array
                                     val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                                    //add new resized bitmap to bitmap array
                                     submitCarViewModel.imgBitmaps.add(resizeBitmap)
                                 }
 
@@ -329,7 +339,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                                     val stream = ByteArrayOutputStream()
                                     val bitmap = ImageDecoder.decodeBitmap(source)
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream)
-                                    var byteArray = stream.toByteArray()
+                                    val byteArray = stream.toByteArray()
                                     val resizeBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                                     submitCarViewModel.imgBitmaps.add(resizeBitmap)
                                 }
@@ -337,6 +347,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
                         }
                     }
                 }
+                //FIXME: When photo taken in landscape, after accepting picture, app crashes
             } else if (requestCode == CAMERA_CAPTURE_CODE) {
                 when {
                     Build.VERSION.SDK_INT < 28 -> {

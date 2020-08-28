@@ -65,6 +65,10 @@
     <string name="title_status_error">* Please select title status</string>
     <string name="too_many_photos_error">* Please submit no more than 16 photos</string>
     <string name="not_enough_photos_error">* Please submit at least 8 photos</string>
+    <string name="home">Home</string>
+    <string name="sell_car">Sell Car</string>
+    <string name="account">Account</string>
+    <string name="about">About</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>
