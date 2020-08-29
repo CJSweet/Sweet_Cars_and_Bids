@@ -1,16 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="THIS IS THE ABOUT PAGE"
-        android:id="@+id/about_text"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/about_title"
+                style="@style/textViewStyle.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/what_s_cars_bids"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/about_cool_car_subtitle"
+                style="@style/textViewStyle.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:text="@string/cool_car_auctions"
+                app:drawableStartCompat="@drawable/subtitle_tab_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_title" />
+
+            <TextView
+                android:id="@+id/about_cool_car_descript"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about_cool_car_descript"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_cool_car_subtitle" />
+
+            <TextView
+                android:id="@+id/about_low_fees_subtitle"
+                style="@style/textViewStyle.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:text="@string/about_low_fees_subtitle"
+                app:drawableStartCompat="@drawable/subtitle_tab_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_cool_car_descript" />
+
+            <TextView
+                android:id="@+id/about_low_fees_descript"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about_low_fees_descript"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_low_fees_subtitle" />
+
+            <TextView
+                android:id="@+id/about_free_history_subtitle"
+                style="@style/textViewStyle.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:text="@string/free_history_report"
+                app:drawableStartCompat="@drawable/subtitle_tab_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_low_fees_descript" />
+
+            <TextView
+                android:id="@+id/about_free_history_descript"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/free_vehicle_history_reports"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_free_history_subtitle" />
+
+            <TextView
+                android:id="@+id/about_easy_use_subtitle"
+                style="@style/textViewStyle.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:text="@string/easy_to_use"
+                app:drawableStartCompat="@drawable/subtitle_tab_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_free_history_descript" />
+
+            <TextView
+                android:id="@+id/about_easy_use_descript"
+                style="@style/textViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/about_easy_use_descript"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_easy_use_subtitle" />
+
+            <TextView
+                android:id="@+id/about_doug_demuro_subtitle"
+                style="@style/textViewStyle.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/doug_demuro_s_platform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_easy_use_descript"
+                android:drawablePadding="6dp"
+                app:drawableStartCompat="@drawable/subtitle_tab_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_doug_demuro_descript"
+                style="@style/textViewStyle"
+                android:text="@string/about_doug_demuro_descript"
+                app:layout_constraintTop_toBottomOf="@id/about_doug_demuro_subtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

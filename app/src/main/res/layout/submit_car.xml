@@ -79,7 +79,7 @@
                         android:background="@drawable/submit_constraint_background"
                         android:drawablePadding="6dp"
                         android:text="@string/submit_your_info_subtitle"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -282,7 +282,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        app:layout_constraintGuide_begin="196dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -311,7 +311,7 @@
                         android:layout_marginTop="@dimen/space_ten"
                         android:drawablePadding="6dp"
                         android:text="@string/submit_car_details_subtitle"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -800,7 +800,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="6dp"
                         android:text="@string/title_info"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1067,7 +1067,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="6dp"
                         android:text="@string/reserve_price"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1166,7 +1166,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="6dp"
                         android:text="@string/photos"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1257,7 +1257,7 @@
                         android:drawablePadding="6dp"
                         android:text="@string/referral"
                         android:textSize="@dimen/subtitle_size"
-                        app:drawableStartCompat="@drawable/submit_car_tab"
+                        app:drawableStartCompat="@drawable/subtitle_tab_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
