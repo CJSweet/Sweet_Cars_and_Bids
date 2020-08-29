@@ -70,8 +70,9 @@
     <string name="about">About</string>
     <string name="what_s_cars_bids"><![CDATA[What\'s Cars & Bids?]]></string>
     <string name="cool_car_auctions">Cool Car Auctions</string>
-    <string name="about_cool_car_descript">Auction you modern enthusiast or cool car — anything from the 1980s to now. \n\n
-        To us, \"cool\" ranges from the obvious (Ferraris, Lamborghinis, Aston Martin, etc.) to the esoteric (a pristine Dodge Dakota Convertible or a Mercury Capri XR2) to the traditional fun cars that enthusiasts love (a Mazda MX-5 Miata or a Porsche 911). Basically, if it\'s exciting, fun, interesting, or quirky and it is from the modern era, it is welcome here on Cars &amp; Bids.</string>
+    <string name="about_cool_car_descript">Auction you modern enthusiast or cool car — anything from the 1980s to now.
+        \n
+        \n To us, \"cool\" ranges from the obvious (Ferraris, Lamborghinis, Aston Martin, etc.) to the esoteric (a pristine Dodge Dakota Convertible or a Mercury Capri XR2) to the traditional fun cars that enthusiasts love (a Mazda MX-5 Miata or a Porsche 911). Basically, if it\'s exciting, fun, interesting, or quirky and it is from the modern era, it is welcome here on Cars &amp; Bids.</string>
     <string name="about_low_fees_subtitle">Low Fees</string>
     <string name="about_low_fees_descript">Buyers pay a 4.5% commission, capped at $4,500. Seller listing fee starts at $49. \n\n
         The buyer\'s fee is a minimum of \$225 and a maximum of \$4,500. The seller\'s fee is \$49 for a no-reserve auction or repeat seller and \$89 for a first-time seller with a reserve auction.</string>
@@ -83,6 +84,26 @@
     <string name="doug_demuro_s_platform">Doug Demuro\'s Platform</string>
     <string name="about_doug_demuro_descript">Doug Demuro brings his years of experience in the car industry to Cars &amp; Bids. \n\n From his successful YouTube channel reviewing cars to his time before that doing. Doug has built a large car enthusiast platform that he now brings to
         Cars &amp; Bids. Periodically, Doug will review cars offered on Cars &amp; Bids which would bring many more eyes to a listing.</string>
+    <string name="about_how_it_works_title">How does it work?</string>
+    <string name="buying_a_car">Buying a Car</string>
+    <string name="selling_a_car">Selling a car</string>
+    <string name="about_buying_a_car_summary"><b>Summary:</b>
+        \n <li>Account required to make a bid.</li>
+        \n <li>Can contact seller both privately and publicly.</li>
+        \n <li>Once a bid is placed, we hold 4.5% of bid on your credit card.</li>
+        \n <li>If a bid is placed within a minute left of auction ending, timer reset to 1 minute.</li>
+        \n <li>Once auction complete, we take the 4.5% commission from winning bidder and release the hold from all other bidders.</li>
+        \n <li>We will send the winning bidder the seller\'s contact information so the remaining details and transactions can be completed.</li>
+        \n <li>If highest bid does not meet reserve, we will talk to seller and highest bidder to try and make it work. We will even take a 2.5% commission fee instead of 4.5%.</li></string>
+    <string name="about_selling_a_car_summary"><b>Summary:</b>
+        \n <li>Account required to fill out form.</li>
+        \n <li>After completing the submission form we will review it and if accepted, we will let you know via email!</li>
+        \n <li>Follow the link in the email to provide more information and more photos.</li>
+        \n <li>Once we get all your information, we will make your listing and send it to you for approval.</li>
+        \n <li>If you do approve, then we will figure out a good time to post your car, where it will be for sale for 7 days.</li>
+        \n <li>During those 7 days, we strongly encourage every seller to keep up with the conversation about your vehicle. Respond to questions, comments, etc., because doing so increases chances of getting the most money possible for your car.</li>
+        \n <li>Once the auction is done, we will send the seller the winning bidder\'s contact information so the remaining details and transactions can be completed.</li>
+        \n <li>If the auction closes without a sale, we will communicate with the seller and highest bidder to try to work out a deal.</li></string>
 
     <string-array name="title_status_array">
         <item>Choose</item>
