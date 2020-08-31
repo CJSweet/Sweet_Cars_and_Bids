@@ -2,6 +2,7 @@ package com.example.carsandbids.submit_car
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -22,6 +23,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.NavHostFragment
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
 import com.example.carsandbids.links
@@ -198,7 +202,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
 
         //on submit button click
         binding.submitSubmitButton.setOnClickListener {
-            submitInfo()
+            checkValidation()
         }
 
         return binding.root
@@ -549,9 +553,48 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
     }
 
     //When submit button clicked, validate, then if valid, send info to database
-    private fun submitInfo(){
+    private fun checkValidation(){
         //validate that all fields have been entered properly
-        validate()
+        val validation = validate()
+
+        if (validation){
+            submitInfo()
+
+            //Show alert dialog saying all info has been submitted
+            val submittedDialog = AlertDialog.Builder(this.requireContext())
+            submittedDialog.setTitle("Car Submitted!")
+            submittedDialog.setMessage("After reviewing your car, we will send you an email letting you know if we will host your car on Cars & Bids.")
+            submittedDialog.setPositiveButton("Ok", {dialog: DialogInterface, which: Int ->
+                val action = SubmitCarFragmentDirections.actionSubmitCarFragmentToMainFragment()
+                NavHostFragment.findNavController(this).navigate(action)
+            })
+            submittedDialog.setCancelable(false)
+            submittedDialog.show()
+            //TODO: proper UI and colors for submitted alert dialog
+
+            //TODO: send email to user, with all information that they submitted about their car to confirm we received the information
+        }
+        else{
+            Toast.makeText(this.requireContext(), "Invalid entries", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun submitInfo() {
+        val carLoc: String
+        if (binding.submitCarLocationUsRadio.isChecked){
+            carLoc = "US " + binding.submitCarLocationUsZipEdit.editText!!.text.trim().toString()
+        }
+        else{
+            carLoc = binding.submitCarLocationCanEdit.editText!!.text.trim().toString()
+        }
+
+        val titleLoc: String
+        if (binding.submitTitleLocationUsRadio.isChecked){
+            titleLoc = binding.submitTitleLocationUsSpinner.selectedItem.toString()
+        }
+        else{
+            titleLoc = binding.submitTitleLocationCanSpinner.selectedItem.toString()
+        }
 
         val yourInfo = YourInfo(
             binding.submitYourNameEdit.editText!!.text.trim().toString(),
@@ -569,13 +612,13 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
             binding.submitModelEdit.editText!!.text.trim().toString(),
             binding.submitVinEdit.editText!!.text.trim().toString(),
             binding.submitMileageEdit.editText!!.text.trim().toString(),
-            "Portland, Oregon",
+            carLoc,
             binding.submitNoteworthyEdit.editText!!.text.trim().toString(),
             binding.submitCarModifiedEdit.editText?.text?.trim().toString()
         )
 
         val titleInfo = TitleInfo(
-            "Portland, Oregon",
+            titleLoc,
             binding.submitNameOnTitleEdit.editText?.text?.trim().toString(),
             binding.submitLienholderRadioYes.isChecked,
             binding.submitTitleStatusSpinner.selectedItem.toString()
@@ -601,9 +644,9 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
 
     //Method to check if all fields have been filled out properly
     //starts at top of submit page and works down, field by field
-    private fun validate(){
-        //this string will be concatenated with non-edit Text fields that need to be selected
-        var invalidString = "Please fill out these fields: \n"
+    private fun validate() : Boolean{
+        //boolean that is init to true, if any errors, set to false
+        var validation: Boolean = true
 
         // PERSON INFO
 
@@ -611,6 +654,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //if neither dealer nor private party selected, flag it
         if(binding.submitDealerRadioGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeDealerError(true)
+            validation = false
         }
         //if dealer radio button selected, check to make sure all dealer fields have been
         // filled out properly
@@ -618,6 +662,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
             //additional fees
             if (binding.submitAdditionalFeesEdit.editText?.text.toString().trim().isEmpty()){
                 binding.submitAdditionalFeesEdit.error = "* Please specify fees, or enter no"
+                validation = false
             }
             else{
                 //if validation okay, set error to null so it does not show or disappears
@@ -626,6 +671,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
             //Dealer name
             if(binding.submitDealerNameEdit.editText?.text.toString().isEmpty()){
                 binding.submitDealerNameEdit.error = "* Please enter dealer name"
+                validation = false
             }
             else{
                 binding.submitDealerNameEdit.isErrorEnabled = false
@@ -634,10 +680,12 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
             val dealweb = binding.submitDealerWebsiteEdit.editText?.text.toString().trim()
             if(dealweb.isEmpty()){
                 binding.submitDealerWebsiteEdit.error = "* Please enter dealer site"
+                validation = false
             }
             //does not match the URL pattern
             else if (!Patterns.WEB_URL.matcher(dealweb).matches()){
                 binding.submitDealerWebsiteEdit.error = "* Please enter proper website"
+                validation = false
             }
             else{
                 binding.submitDealerWebsiteEdit.isErrorEnabled = false
@@ -649,6 +697,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         val name = binding.submitYourNameEdit.editText?.text.toString().trim()
         if(name.isEmpty()){
             binding.submitYourNameEdit.error = "* Please enter a name"
+            validation = false
         }
         else{
             binding.submitYourNameEdit.isErrorEnabled = false
@@ -658,9 +707,11 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         val contnumber = binding.submitPhoneEdit.editText?.text.toString().trim()
         if(contnumber.isEmpty()){
             binding.submitPhoneEdit.error = "* Please enter a phone number"
+            validation = false
         }
         else if (!Patterns.PHONE.matcher(contnumber).matches()){
             binding.submitPhoneEdit.error = "* Invalid phone number"
+            validation = false
         }
         else{
             binding.submitPhoneEdit.isErrorEnabled = false
@@ -672,6 +723,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //car sale elsewhere
         if(binding.submitSaleElsewhereGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeSaleError(true)
+            validation = false
         }
         else if (submit_sale_elsewhere_group.checkedRadioButtonId == submit_sale_elsewhere_yes_radio.id){
             //TODO: validate dynamic links entry
@@ -683,11 +735,13 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Year
         if (binding.submitYearSpinner.selectedItem == "Choose year"){
             submitCarViewModel.seeYearError(true)
+            validation = false
         }
 
         //Make
         if (binding.submitMakeEdit.editText?.text.toString().trim().isEmpty()){
             binding.submitMakeEdit.error = "* Please enter make"
+            validation = false
         }
         else{
             binding.submitMakeEdit.isErrorEnabled = false
@@ -696,6 +750,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Model
         if(binding.submitModelEdit.editText?.text.toString().trim().isEmpty()){
             binding.submitModelEdit.error = "* Please enter model"
+            validation = false
         }
         else{
             binding.submitModelEdit.isErrorEnabled = false
@@ -704,6 +759,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //VIN
         if (binding.submitVinEdit.editText?.text.toString().trim().isEmpty()){
             binding.submitVinEdit.error = "* Please enter VIN"
+            validation = false
         }
         else{
             binding.submitVinEdit.isErrorEnabled = false
@@ -712,6 +768,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Mileage
         if (binding.submitMileageEdit.editText?.text.toString().trim().isEmpty()){
             binding.submitMileageEdit.error = "* Please enter mileage"
+            validation = false
         }
         else{
             binding.submitMileageEdit.isErrorEnabled = false
@@ -720,13 +777,16 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Car Location Radio`
         if(binding.submitCarLocationGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeCarLocError(true)
+            validation = false
         }
         else if (binding.submitCarLocationGroup.checkedRadioButtonId == binding.submitCarLocationUsRadio.id){
             if (binding.submitCarLocationUsZipEdit.editText?.text.toString().trim().isEmpty()){
                 binding.submitCarLocationUsZipEdit.error ="* Must enter a Zip code"
+                validation = false
             }
             else if (binding.submitCarLocationUsZipEdit.editText?.text.toString().trim().length < 5){
                 binding.submitCarLocationUsZipEdit.error = "* Entered Zip is to short"
+                validation = false
             }
             else{
                 binding.submitCarLocationUsZipEdit.isErrorEnabled = false
@@ -735,6 +795,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         else if (binding.submitCarLocationGroup.checkedRadioButtonId == binding.submitCarLocationCanRadio.id){
             if (binding.submitCarLocationCanEdit.editText?.text.toString().trim().isEmpty()){
                 binding.submitCarLocationCanEdit.error = "* Please enter city/province"
+                validation = false
             }
             else{
                 binding.submitCarLocationCanEdit.isErrorEnabled = false
@@ -744,6 +805,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Noteworthy Features and Options
         if(binding.submitNoteworthyEdit.editText?.text.toString().isEmpty()){
             binding.submitNoteworthyEdit.error = "* Please provide some features"
+            validation = false
         }
         else {
             binding.submitNoteworthyEdit.isErrorEnabled = false
@@ -752,10 +814,12 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //Been modified radio group
         if(binding.submitModifiedGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeCarModError(true)
+            validation = false
         }
         else if(binding.submitModifiedGroup.checkedRadioButtonId == binding.submitModifiedRadio.id){
             if (binding.submitCarModifiedEdit.editText?.text.toString().trim().isEmpty()){
                 binding.submitCarModifiedEdit.error ="* Please specify modifications"
+                validation = false
             }
             else{
                 binding.submitCarModifiedEdit.isErrorEnabled = false
@@ -766,15 +830,18 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //where is car titled radio
         if (binding.submitTitleLocationGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeTitleLocError(true)
+            validation = false
         }
         else if (binding.submitTitleLocationGroup.checkedRadioButtonId == binding.submitTitleLocationUsRadio.id){
             if (binding.submitTitleLocationUsSpinner.selectedItem == "Select state"){
                 submitCarViewModel.seeTitleLocSpinError(true)
+                validation = false
             }
         }
         else if (binding.submitTitleLocationGroup.checkedRadioButtonId == binding.submitTitleLocationCanRadio.id){
             if(binding.submitTitleLocationCanSpinner.selectedItem == "Select a province"){
                 submitCarViewModel.seeTitleLocSpinError(true)
+                validation = false
             }
         }
 
@@ -783,10 +850,12 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         // radio unchecked, or if user name not on title
         if (binding.submitTitleWhosNameGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeTitleNameError(true)
+            validation = false
         }
         else if (binding.submitTitleWhosNameGroup.checkedRadioButtonId == binding.submitTitleWhosNameRadioNo.id){
             if (binding.submitNameOnTitleEdit.editText?.text.toString().isEmpty()){
                 binding.submitNameOnTitleEdit.error = "* Please enter the name on title"
+                validation = false
             }
             else{
                 binding.submitNameOnTitleEdit.isErrorEnabled = false
@@ -796,21 +865,25 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         //lienholder
         if(binding.submitLienholderGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeLienError(true)
+            validation = false
         }
 
         //Title status
         if(binding.submitTitleStatusSpinner.selectedItem == "Choose"){
             submitCarViewModel.seeTitleStatusError(true)
+            validation = false
         }
 
 
         //RESERVE PRICE
         if(binding.submitReserveGroup.checkedRadioButtonId == -1){
             submitCarViewModel.seeReserveError(true)
+            validation = false
         }
         else if (binding.submitReserveGroup.checkedRadioButtonId == binding.submitReserveRadioYes.id){
             if(binding.submitReserveAPriceEdit.editText?.text.toString().isEmpty()){
                 binding.submitReserveAPriceEdit.error = "* Please specify reserve"
+                validation = false
             }
             else {
                 binding.submitReserveAPriceEdit.isErrorEnabled = false
@@ -822,16 +895,20 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener, Adapte
         if (submitCarViewModel.imgBitmaps.size > 16){
             submitCarViewModel.seePhotoError(true)
             binding.submitPhotosError.setText(getString(R.string.too_many_photos_error))
+            validation = false
         }
         else if (submitCarViewModel.imgBitmaps.size < 8){
             submitCarViewModel.seePhotoError(true)
             binding.submitPhotosError.setText(getString(R.string.not_enough_photos_error))
+            validation = false
         }
         else{
             submitCarViewModel.seePhotoError(false)
         }
 
         //Validation for referral not necessary
+
+        return validation
     }
 
     //onNothingSelected and onItemSelected for Spinner selections

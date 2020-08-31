@@ -14,6 +14,10 @@ buildscript {
 
         //for google services and firebase
         classpath 'com.google.gms:google-services:4.3.3'
+
+        //for safeargs and navigation
+        def nav_version = "2.3.0"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 

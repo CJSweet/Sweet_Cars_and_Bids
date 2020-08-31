@@ -17,6 +17,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
@@ -371,6 +372,7 @@ class SubmitCarViewModel : ViewModel() {
         /*
             FIXME: Takes a very long time to upload the photos, is there a better, more efficient/faster
                 way to do it?
+                Can make this run on another dispatcher with right code
          */
 
         //from documentation
@@ -381,10 +383,11 @@ class SubmitCarViewModel : ViewModel() {
 
                 //convert bitmap to URI
                 //https://freakycoder.com/android-notes-72-how-to-convert-bitmap-to-uri-e535391ebdac
+                //title is current time so that way pictures do not override each other more than 32 times, which will throw an exception
                 val path = MediaStore.Images.Media.insertImage(
                     context.contentResolver,
                     imgBitmaps[photo],
-                    "picture",
+                    System.currentTimeMillis().toString(),
                     null
                 )
 
@@ -400,39 +403,39 @@ class SubmitCarViewModel : ViewModel() {
 
                 fileRef.putFile(uri)
                     .addOnSuccessListener {
-                        Toast.makeText(context, "Success!!", Toast.LENGTH_LONG).show()
+
+                        val downloadUri = it.uploadSessionUri.toString()
+                        imgUrls.add(downloadUri)
+
+                        //if all images have been uploaded, then
+                        // upoad all info to firestore database
+                        if (imgUrls.size == imgBitmaps.size) {
+                            val allInfo = AllInfo(
+                                yourInfo,
+                                carDetails,
+                                titleInfo,
+                                reservePrice,
+                                imgUrls,
+                                referral
+                            )
+
+                            val id = System.currentTimeMillis().toString()
+
+                            println("Sent to Firestore")
+
+                            //Upload info to database
+                            firestore.collection("Submitted Cars")
+                                .document(id)
+                                .set(allInfo)
+                        }
                     }
                     .addOnFailureListener {
                         Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     }
-                    .addOnProgressListener {
-                        Toast.makeText(context, "Uploading...", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val downloadUri = it.result?.uploadSessionUri.toString()
-                            Toast.makeText(context, downloadUri, Toast.LENGTH_SHORT).show()
-                            imgUrls.add(downloadUri)
-                        }
-                    }
+//                    .addOnProgressListener {
+//                        Toast.makeText(context, "Uploading...", Toast.LENGTH_SHORT).show()
+//                    }
             }
-
-            val allInfo = AllInfo(
-                yourInfo,
-                carDetails,
-                titleInfo,
-                reservePrice,
-                imgUrls,
-                referral
-            )
-
-            val id = System.currentTimeMillis().toString()
-
-            //Upload info to database
-            firestore.collection("Submitted Cars")
-                .document(id)
-                .set(allInfo)
-
         }
     }
 }

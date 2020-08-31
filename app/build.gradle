@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
@@ -71,5 +72,4 @@ dependencies {
 
     //For the YouTube player, from: https://github.com/PierfrancescoSoffritti/android-youtube-player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-
 }
