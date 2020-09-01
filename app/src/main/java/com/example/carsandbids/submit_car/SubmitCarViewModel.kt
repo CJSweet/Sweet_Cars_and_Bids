@@ -1,13 +1,22 @@
 package com.example.carsandbids.submit_car
 
+import android.Manifest
+import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,8 +26,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.delay
+import com.squareup.okhttp.Dispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import kotlin.collections.ArrayList
 
 class SubmitCarViewModel : ViewModel() {
@@ -351,13 +363,11 @@ class SubmitCarViewModel : ViewModel() {
             _photoError.value = View.GONE
     }
 
-
     private fun getFileExtension(context: Context, uri: Uri): String {
         val cR = context.contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cR.getType(uri))!!
     }
-
 
     //structure of function from: https://www.youtube.com/watch?v=lPfQN-Sfnjw&t=884s
     fun uploadImage(
@@ -376,7 +386,7 @@ class SubmitCarViewModel : ViewModel() {
          */
 
         //from documentation
-        viewModelScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             var imgUrls = ArrayList<String>()
 
             for (photo in 0 until imgBitmaps.size) {
@@ -421,20 +431,18 @@ class SubmitCarViewModel : ViewModel() {
 
                             val id = System.currentTimeMillis().toString()
 
-                            println("Sent to Firestore")
-
                             //Upload info to database
                             firestore.collection("Submitted Cars")
                                 .document(id)
                                 .set(allInfo)
+
+                            Log.i("SubmitCarFragment", "End of sending to firestore")
                         }
                     }
                     .addOnFailureListener {
                         Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     }
-//                    .addOnProgressListener {
-//                        Toast.makeText(context, "Uploading...", Toast.LENGTH_SHORT).show()
-//                    }
+
             }
         }
     }
