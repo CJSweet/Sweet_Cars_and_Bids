@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.SubmitCarBinding
-import com.example.carsandbids.links
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.submit_car.*
 import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
@@ -95,12 +96,6 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         val adapter = PhotoAdapter(submitCarViewModel.imgBitmaps, this)
         binding.submitPhotosRecycler.adapter = adapter
 
-        //call more links as many times as the number of viewModel._extraLinks
-        // that way through rotation, the number of UI elements are saved
-        for (link in 0 until links) {
-            moreLinks()
-        }
-
         val arrayListYears = arrayListYears()
 
         //bind title status spinner (code based off of spinner documentation: https://developer.android.com/guide/topics/ui/controls/spinner)
@@ -162,8 +157,10 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         parentLayout = binding.submitMoreLinksLayout
         binding.submitMoreListingLinksText.setOnClickListener {
             moreLinks()
-            links = links.plus(1)
         }
+
+        //apply links back to UI if rebuilt
+        recreateLinks()
 
         //set on click for photo button
         binding.submitSelectPhotosButton.setOnClickListener {
@@ -213,6 +210,18 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         return binding.root
     }
 
+    private fun recreateLinks() {
+        if (submitCarViewModel.linksList.isNotEmpty()){
+            for (views in 0 until submitCarViewModel.linksList.size){
+                val parent = submitCarViewModel.linksList[views].parent as ViewGroup
+                parent.removeView(submitCarViewModel.linksList[views])
+            }
+            for (edit in 0 until submitCarViewModel.linksList.size){
+                parentLayout.addView(submitCarViewModel.linksList[edit])
+            }
+        }
+    }
+
     // figure out the years array needed for array spinner
     // TODO: Maybe need to include the upcoming year for brand new models?
     fun arrayListYears(): ArrayList<String> {
@@ -233,7 +242,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         val inflater =
             this.requireActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
-        val newEditView: View = inflater!!.inflate(R.layout.submit_more_links_edit_text, null)
+        val newEditView = inflater!!.inflate(R.layout.submit_more_links_edit_text, null) as EditText
 
         //get proper dimen value from dimen resource xml
         // from: https://stackoverflow.com/questions/11121028/load-dimension-value-from-res-values-dimension-xml-from-source-code
@@ -245,6 +254,10 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
             LinearLayout.LayoutParams(editWidth.toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
         param.setMargins(12, 6, 6, 10)
         newEditView.layoutParams = param
+
+        newEditView.inputType = InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT
+
+        submitCarViewModel.linksList.add(newEditView)
 
         // Add the new row at end of layout
         parentLayout.addView(newEditView, parentLayout.childCount)
@@ -394,10 +407,10 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
     /*FIXME: When image is resized, it is added to image gallery, thus, I now have the same image
         but saved twice for two different sizes. only want one
     * */
+    //TODO: Make compressing images faster so UI is not slowed down
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-
             if (requestCode == IMAGE_PICK_CODE) {
 //            make sure data (in this case the image) is not null
 //            https://www.youtube.com/watch?v=ZCs7RFZQ_To
@@ -672,7 +685,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         }
         //if dealer radio button selected, check to make sure all dealer fields have been
         // filled out properly
-        else if (binding.submitDealerRadioGroup.checkedRadioButtonId == submit_radio_dealer.id) {
+        else if (binding.submitDealerRadioGroup.checkedRadioButtonId == binding.submitRadioDealer.id) {
             //additional fees
             if (binding.submitAdditionalFeesEdit.editText?.text.toString().trim().isEmpty()) {
                 binding.submitAdditionalFeesEdit.error = "* Please specify fees, or enter no"
@@ -732,8 +745,19 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
         if (binding.submitSaleElsewhereGroup.checkedRadioButtonId == -1) {
             submitCarViewModel.seeSaleError(true)
             validation = false
-        } else if (submit_sale_elsewhere_group.checkedRadioButtonId == submit_sale_elsewhere_yes_radio.id) {
-            //TODO: validate dynamic links entry
+        } else if (binding.submitSaleElsewhereGroup.checkedRadioButtonId == binding.submitSaleElsewhereYesRadio.id) {
+            if (binding.submitLinkOtherListingsEdit.editText!!.text.trim().toString().isEmpty()){
+                binding.submitLinkOtherListingsEdit.error = "* Please enter a website link"
+                validation = false
+            }
+            else if (!Patterns.WEB_URL.matcher(binding.submitLinkOtherListingsEdit.editText!!.text.trim().toString()).matches()){
+                binding.submitLinkOtherListingsEdit.error = "* Please enter a proper website link"
+                validation = false
+            }
+            else{
+                binding.submitLinkOtherListingsEdit.isErrorEnabled = false
+            }
+            //Do not care to check errors on the other additional links, because user may have made more than needed.
         } else {
             binding.submitLinkOtherListingsEdit.isErrorEnabled = false
         }

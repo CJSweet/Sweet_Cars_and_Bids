@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.textfield.TextInputLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/submit_more_links_edit"
-    style="@style/textLayoutEdit"
+    style="@style/editTextStyle"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:inputType="textCapWords"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:inputType="textCapWords"
-        style="@style/editTextStyle"/>
-
-</com.google.android.material.textfield.TextInputLayout>
+    app:layout_constraintStart_toStartOf="parent" />
 
 

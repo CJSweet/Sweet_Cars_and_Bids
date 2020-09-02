@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -149,6 +150,12 @@ class SubmitCarViewModel : ViewModel() {
 
     //Declaring a firestore reference to upload all data
     private lateinit var firestore: FirebaseFirestore
+
+    //for keeping track of how many link editTexts need to be displayed
+    var links = 0
+
+    //List of EditTexts for the links users may need for where car is being sold
+    var linksList = ArrayList<EditText>()
 
     //initialize all variable views to GONE
     init {
