@@ -23,8 +23,8 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
         }
 
         override fun onClick(v: View?) {
-            //https://www.youtube.com/watch?v=wKFJsrdiGS8
-            //this way, there is no chance of clicking a view holder during
+            // https://www.youtube.com/watch?v=wKFJsrdiGS8
+            // this way, there is no chance of clicking a view holder during
             // the time it is being deleted
             val pos = adapterPosition
             if(pos != RecyclerView.NO_POSITION){
@@ -33,28 +33,28 @@ class PhotoAdapter(private val photos: ArrayList<Bitmap>, val onDeletePhotoListe
         }
     }
 
-    //create a new view (invoked by layout manager)
+    // create a new view (invoked by layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoAdapter.PhotoViewHolder {
 
-        //create a new view
+        // create a new view
         val imageView = LayoutInflater.from(parent.context)
             .inflate(R.layout.submit_photo_item, parent, false) as LinearLayout
 
-        //can set more parameters here if desired
+        // can set more parameters here if desired
 
         return PhotoViewHolder(imageView)
     }
 
-    //return the size of the data set,
+    // return the size of the data set,
     override fun getItemCount(): Int {
         if (photos.size > 0)
             return photos.size
         else return 0
     }
 
-    //Replace the contents of a view (also invoked by the layout manager)
+    // Replace the contents of a view (also invoked by the layout manager)
     override fun onBindViewHolder(holder: PhotoAdapter.PhotoViewHolder, position: Int) {
-        // get element from data set (in this case, the URI)
+        // get element from data set (in this case, the Bitmap)
         // replace the contents of the image view with the new bitmap
         holder.imageView.submit_photo_view.setImageBitmap(photos[position])
     }

@@ -1,5 +1,7 @@
 package com.example.carsandbids.submit_car
 
+import android.net.Uri
+
 data class YourInfo(
     val name: String ?= null,
     val number: String ?= null,
@@ -9,7 +11,7 @@ data class YourInfo(
 )
 
 data class CarDetails(
-    val saleElsewhere: Boolean ?= false,
+    val saleElsewhere: ArrayList<String>,
     val year: String,
     val make: String,
     val model: String,
@@ -29,6 +31,10 @@ data class TitleInfo(
 
 data class ReservePrice(
     val reserve: String
+)
+
+data class Photos(
+    val imgUrls: ArrayList<String>
 )
 
 data class Referral(
