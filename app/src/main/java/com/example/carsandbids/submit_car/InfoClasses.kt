@@ -1,6 +1,7 @@
 package com.example.carsandbids.submit_car
 
 import android.net.Uri
+import com.google.firebase.storage.UploadTask
 
 data class YourInfo(
     val name: String ?= null,
@@ -31,10 +32,6 @@ data class TitleInfo(
 
 data class ReservePrice(
     val reserve: String
-)
-
-data class Photos(
-    val imgUrls: ArrayList<String>
 )
 
 data class Referral(

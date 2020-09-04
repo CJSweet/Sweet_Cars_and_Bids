@@ -27,6 +27,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.squareup.okhttp.Dispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -338,7 +339,7 @@ class SubmitCarViewModel : ViewModel() {
 
     /**
      * Function to toggle visibility of for sale elsewhere radio group error
-     * 
+     *
      * @param see if true, see the error, else view.GONE
      */
     fun seeSaleError(see: Boolean) {
@@ -538,36 +539,39 @@ class SubmitCarViewModel : ViewModel() {
                 )
 
                 fileRef.putFile(uri)
-                    .addOnSuccessListener {
+                    .addOnSuccessListener { it ->
+                        it.storage.downloadUrl.addOnCompleteListener { task ->
+                            imgUrls.add(task.result.toString())
 
-                        val downloadUri = it.uploadSessionUri.toString()
-                        imgUrls.add(downloadUri)
+                            // if all images have been uploaded, then
+                            // upload all info to firestore database
+                            if (imgUrls.size == imgBitmaps.size) {
+                                val allInfo = AllInfo(
+                                    yourInfo,
+                                    carDetails,
+                                    titleInfo,
+                                    reservePrice,
+                                    imgUrls,
+                                    referral
+                                )
 
-                        // if all images have been uploaded, then
-                        // upoad all info to firestore database
-                        if (imgUrls.size == imgBitmaps.size) {
-                            val allInfo = AllInfo(
-                                yourInfo,
-                                carDetails,
-                                titleInfo,
-                                reservePrice,
-                                imgUrls,
-                                referral
-                            )
+                                val id = System.currentTimeMillis().toString()
 
-                            val id = System.currentTimeMillis().toString()
+                                // Upload info to database
+                                firestore.collection("Submitted Cars")
+                                    .document(id).set(allInfo)
 
-                            // Upload info to database
-                            firestore.collection("Submitted Cars")
-                                .document(id).set(allInfo)
-
-                            Log.i("SubmitCarFragment", "End of sending to firestore")
+                                Log.i("SubmitCarFragment", "End of sending to firestore")
+                            }
                         }
+
                     }
                     .addOnFailureListener {
                         Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     }
-
+                    .addOnCompleteListener {
+                        it.result
+                    }
             }
         }
     }

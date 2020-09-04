@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.carsandbids.databinding.MainFragmentBinding
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -20,6 +21,8 @@ class MainFragment : Fragment() {
     lateinit var mainViewModel: MainViewModel
 
     var dummyDisplayCars = ArrayList<Map<String, Any>>()
+
+    lateinit var firestore: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +36,22 @@ class MainFragment : Fragment() {
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val firestore = Firebase.firestore
+        firestore = Firebase.firestore
 
+        getData()
+
+        // Read data from database into list
+        Log.i("MainFragment", "There are ${dummyDisplayCars.size} listings in the list")
+        // create recyclerview adapter, giving it the list from firestore
+        val adapter = ListingsAdapter(this.requireContext(), dummyDisplayCars)
+        binding.mainRecycler.adapter = adapter
+        // set main recyclerview adapter as the one just created
+
+        return binding.root
+
+    }
+
+    fun getData(){
         firestore.collection("Submitted Cars")
             .get()
             .addOnCompleteListener(OnCompleteListener<QuerySnapshot> { task ->
@@ -49,17 +66,6 @@ class MainFragment : Fragment() {
                     Log.w("MainViewModel", "Error getting documents.", task.exception)
                 }
             })
-
-
-        // Read data from database into list
-        Log.i("MainFragment", "There are ${dummyDisplayCars.size} listings in the list")
-        // create recyclerview adapter, giving it the list from firestore
-        val adapter = ListingsAdapter(dummyDisplayCars)
-        binding.mainRecycler.adapter = adapter
-        // set main recyclerview adapter as the one just created
-
-        return binding.root
-
     }
 
 }

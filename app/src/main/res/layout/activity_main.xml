@@ -10,6 +10,9 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
         android:layout_above="@id/bot_nav_bar"/>
@@ -18,9 +21,12 @@
         android:id="@+id/bot_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/space_three"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         app:menu="@menu/bot_nav_bar"
-        android:background="@color/off_white"/>
+        android:background="@android:color/white"/>
 
 </RelativeLayout>
 
