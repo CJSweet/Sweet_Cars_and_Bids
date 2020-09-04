@@ -508,8 +508,8 @@ class SubmitCarViewModel : ViewModel() {
         yourInfo: YourInfo,
         carDetails: CarDetails,
         titleInfo: TitleInfo,
-        reservePrice: ReservePrice,
-        referral: Referral
+        reservePrice: String,
+        referral: String
     ) {
 
         // from documentation
@@ -543,10 +543,15 @@ class SubmitCarViewModel : ViewModel() {
                         it.storage.downloadUrl.addOnCompleteListener { task ->
                             imgUrls.add(task.result.toString())
 
+                            val timestamp = System.currentTimeMillis()
+
+                            val id = timestamp.toString()
+
                             // if all images have been uploaded, then
                             // upload all info to firestore database
                             if (imgUrls.size == imgBitmaps.size) {
                                 val allInfo = AllInfo(
+                                    timestamp,
                                     yourInfo,
                                     carDetails,
                                     titleInfo,
@@ -554,8 +559,6 @@ class SubmitCarViewModel : ViewModel() {
                                     imgUrls,
                                     referral
                                 )
-
-                                val id = System.currentTimeMillis().toString()
 
                                 // Upload info to database
                                 firestore.collection("Submitted Cars")

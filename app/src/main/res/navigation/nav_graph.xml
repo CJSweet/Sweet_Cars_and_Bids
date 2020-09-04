@@ -22,4 +22,11 @@
         android:id="@+id/aboutFragment"
         android:name="com.example.carsandbids.about_fragment.AboutFragment"
         android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/detailedListingFragment"
+        android:name="com.example.carsandbids.detailed_listing.DetailedListingFragment"
+        android:label="DetailedListingFragment" >
+        <argument android:name="listing"
+            app:argType="com.example.carsandbids.mainpage.Listing" />
+    </fragment>
 </navigation>

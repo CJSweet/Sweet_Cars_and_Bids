@@ -30,19 +30,12 @@ data class TitleInfo(
     val titleStatus: String
 )
 
-data class ReservePrice(
-    val reserve: String
-)
-
-data class Referral(
-    val referral: String ?= null
-)
-
 data class AllInfo(
+    val timestamp: Long,
     val yourInfo: YourInfo,
     val carDetails: CarDetails,
     val titleInfo: TitleInfo,
-    val reservePrice: ReservePrice,
+    val reserve: String?,
     val imgURls: ArrayList<String>,
-    val referral: Referral
+    val referral: String?
 )

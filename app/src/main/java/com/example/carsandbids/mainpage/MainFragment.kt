@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.example.carsandbids.databinding.MainFragmentBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,7 +16,10 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MainFragment : Fragment() {
+//TODO: Make sure both the listings page and the sell car page have the same
+//  margins, to keep the user familiar
+
+class MainFragment : Fragment(), ListingsAdapter.OnClickCardListener {
 
     lateinit var binding: MainFragmentBinding
 
@@ -43,7 +48,7 @@ class MainFragment : Fragment() {
         // Read data from database into list
         Log.i("MainFragment", "There are ${dummyDisplayCars.size} listings in the list")
         // create recyclerview adapter, giving it the list from firestore
-        val adapter = ListingsAdapter(this.requireContext(), dummyDisplayCars)
+        val adapter = ListingsAdapter(this.requireContext(), dummyDisplayCars, this)
         binding.mainRecycler.adapter = adapter
         // set main recyclerview adapter as the one just created
 
@@ -68,4 +73,14 @@ class MainFragment : Fragment() {
             })
     }
 
+    override fun onClickCard(listing: Map<String, Any>) {
+        val carDetailsMap = listing.get("carDetails") as Map<*, *>
+        val make = carDetailsMap["make"].toString()
+        Toast.makeText(this.requireContext(), "you clicked the $make", Toast.LENGTH_SHORT).show()
+
+        // val classListing = Listing(listing)
+
+//        val action = MainFragmentDirections.actionMainFragmentToDetailedListingFragment(classListing)
+//        NavHostFragment.findNavController(this).navigate(action)
+    }
 }

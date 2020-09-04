@@ -806,15 +806,13 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
             binding.submitTitleStatusSpinner.selectedItem.toString()
         )
 
-        // Make reservePrice data class
-        val reservePrice = ReservePrice(
+        // Make reserve String
+        val reserve =
             binding.submitReserveAPriceEdit.editText?.text?.trim().toString()
-        )
 
         // Make referral data class
-        val referral = Referral(
+        val referral =
             binding.submitReferralEdit.text?.trim().toString()
-        )
 
         // Upload image to storage, then once complete, upload information to database
         submitCarViewModel.uploadInfo(
@@ -822,7 +820,7 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
             yourInfo,
             carDetails,
             titleInfo,
-            reservePrice,
+            reserve,
             referral
         )
     }
@@ -1076,7 +1074,8 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
             submitCarViewModel.seePhotoError(true)
             binding.submitPhotosError.setText(getString(R.string.too_many_photos_error))
             validation = false
-        } else if (submitCarViewModel.imgBitmaps.size < 8) {
+        } else if (submitCarViewModel.imgBitmaps.size < 1) {
+            //TODO: Change back to 8 photos minimum
             submitCarViewModel.seePhotoError(true)
             binding.submitPhotosError.setText(getString(R.string.not_enough_photos_error))
             validation = false

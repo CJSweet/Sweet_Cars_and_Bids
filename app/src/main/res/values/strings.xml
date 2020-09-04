@@ -70,19 +70,19 @@
     <string name="about">About</string>
     <string name="what_s_cars_bids"><![CDATA[What\'s Cars & Bids?]]></string>
     <string name="cool_car_auctions">Cool Car Auctions</string>
-    <string name="about_cool_car_descript">Auction you modern enthusiast or cool car — anything from the 1980s to now.
+    <string name="about_cool_car_descript">\t\tAuction you modern enthusiast or cool car — anything from the 1980s to now.
         \n
-        \n To us, \"cool\" ranges from the obvious (Ferraris, Lamborghinis, Aston Martin, etc.) to the esoteric (a pristine Dodge Dakota Convertible or a Mercury Capri XR2) to the traditional fun cars that enthusiasts love (a Mazda MX-5 Miata or a Porsche 911). Basically, if it\'s exciting, fun, interesting, or quirky and it is from the modern era, it is welcome here on Cars &amp; Bids.</string>
+        \n\t\tTo us, \"cool\" ranges from the obvious (Ferraris, Lamborghinis, Aston Martin, etc.) to the esoteric (a pristine Dodge Dakota Convertible or a Mercury Capri XR2) to the traditional fun cars that enthusiasts love (a Mazda MX-5 Miata or a Porsche 911). Basically, if it\'s exciting, fun, interesting, or quirky and it is from the modern era, it is welcome here on Cars &amp; Bids.</string>
     <string name="about_low_fees_subtitle">Low Fees</string>
-    <string name="about_low_fees_descript">Buyers pay a 4.5% commission, capped at $4,500. Seller listing fee starts at $49. \n\n
-        The buyer\'s fee is a minimum of \$225 and a maximum of \$4,500. The seller\'s fee is \$49 for a no-reserve auction or repeat seller and \$89 for a first-time seller with a reserve auction.</string>
+    <string name="about_low_fees_descript">\t\tBuyers pay a 4.5% commission, capped at $4,500. Seller listing fee starts at $49. \n\n
+        \t\tThe buyer\'s fee is a minimum of \$225 and a maximum of \$4,500. The seller\'s fee is \$49 for a no-reserve auction or repeat seller and \$89 for a first-time seller with a reserve auction.</string>
     <string name="free_history_report">Free History Report</string>
-    <string name="free_vehicle_history_reports">We provide free vehicle history reports for every vehicle listed. We believe every vehicle should come with a vehicle history report, so we provide one for free, instead of having the sellers pay for their own.</string>
+    <string name="free_vehicle_history_reports">\t\tWe provide free vehicle history reports for every vehicle listed. We believe every vehicle should come with a vehicle history report, so we provide one for free, instead of having the sellers pay for their own.</string>
     <string name="easy_to_use">Easy to Use</string>
-    <string name="about_easy_use_descript">We\'ve developed several new features that innovate buying and selling enthusiast cars online. \n\n
-        From making it so a seller only needs to provide crucial information when applying to sell, to simplified sorting and searching when buying, to quickly getting cars up for auction; Cars &amp; Bids offers an easy-to-use car auction platform.</string>
+    <string name="about_easy_use_descript">\t\tWe\'ve developed several new features that innovate buying and selling enthusiast cars online. \n\n
+        \t\tFrom making it so a seller only needs to provide crucial information when applying to sell, to simplified sorting and searching when buying, to quickly getting cars up for auction; Cars &amp; Bids offers an easy-to-use car auction platform.</string>
     <string name="doug_demuro_s_platform">Doug Demuro\'s Platform</string>
-    <string name="about_doug_demuro_descript">Doug Demuro brings his years of experience in the car industry to Cars &amp; Bids. \n\n From his successful YouTube channel reviewing cars to his time before that doing. Doug has built a large car enthusiast platform that he now brings to
+    <string name="about_doug_demuro_descript">\t\tDoug Demuro brings his years of experience in the car industry to Cars &amp; Bids. \n\n\t\tFrom his successful YouTube channel reviewing cars to his time before that doing. Doug has built a large car enthusiast platform that he now brings to
         Cars &amp; Bids. Periodically, Doug will review cars offered on Cars &amp; Bids which would bring many more eyes to a listing.</string>
     <string name="about_how_it_works_title">How does it work?</string>
     <string name="buying_a_car">Buying a Car</string>
@@ -104,6 +104,7 @@
         \n <li>During those 7 days, we strongly encourage every seller to keep up with the conversation about your vehicle. Respond to questions, comments, etc., because doing so increases chances of getting the most money possible for your car.</li>
         \n <li>Once the auction is done, we will send the seller the winning bidder\'s contact information so the remaining details and transactions can be completed.</li>
         \n <li>If the auction closes without a sale, we will communicate with the seller and highest bidder to try to work out a deal.</li></string>
+    <string name="no_reserve">NO RESERVE</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>
