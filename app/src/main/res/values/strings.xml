@@ -105,6 +105,14 @@
         \n <li>Once the auction is done, we will send the seller the winning bidder\'s contact information so the remaining details and transactions can be completed.</li>
         \n <li>If the auction closes without a sale, we will communicate with the seller and highest bidder to try to work out a deal.</li></string>
     <string name="no_reserve">NO RESERVE</string>
+    <string name="detailed_seller_info">Seller: %1$s</string>
+    <string name="detailed_seller_type">Seller Type: %1$s</string>
+    <string name="detailed_title_status">Title Status: %1$s</string>
+    <string name="detailed_title_location">Title Location: %1$s</string>
+    <string name="detailed_mileage">Mileage: %1$s</string>
+    <string name="detailed_mods">Modifications: %1$s</string>
+    <string name="detailed_caseys_take_title">Casey\'s Take</string>
+    <string name="detailed_caseys_take_text">This is a great car! Such a great color and features. It has four wheels, at least one door, contains a steering wheel, and pedals. At this point I am filling the text as to make it seem like there is a lot of talk about my take.</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>

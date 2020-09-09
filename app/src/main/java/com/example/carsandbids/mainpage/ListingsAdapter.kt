@@ -35,7 +35,7 @@ class ListingsAdapter(val context: Context, private val listings: ArrayList<Map<
             // the time it is being deleted
             val pos = adapterPosition
             if(pos != RecyclerView.NO_POSITION){
-                onClickCard.onClickCard(listings[adapterPosition])
+                onClickCard.onClickCard(adapterPosition)
             }
         }
     }
@@ -130,7 +130,7 @@ class ListingsAdapter(val context: Context, private val listings: ArrayList<Map<
     }
 
     interface OnClickCardListener{
-        fun onClickCard(listing: Map<String, Any>)
+        fun onClickCard(position: Int)
     }
 
 }

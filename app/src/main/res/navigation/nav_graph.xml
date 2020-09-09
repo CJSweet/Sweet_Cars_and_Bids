@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/submitCarFragment"
         android:name="com.example.carsandbids.submit_car.SubmitCarFragment"
-        android:label="SubmitCarFragment" >
+        android:label="SubmitCarFragment">
         <action
             android:id="@+id/action_submitCarFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -13,7 +14,12 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.carsandbids.mainpage.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_detailedListingFragment"
+            app:destination="@id/detailedListingFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
         <action
             android:id="@+id/action_mainFragment_to_submitCarFragment"
             app:destination="@id/submitCarFragment" />
@@ -25,8 +31,15 @@
     <fragment
         android:id="@+id/detailedListingFragment"
         android:name="com.example.carsandbids.detailed_listing.DetailedListingFragment"
-        android:label="DetailedListingFragment" >
-        <argument android:name="listing"
-            app:argType="com.example.carsandbids.mainpage.Listing" />
+        android:label="DetailedListingFragment">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailedListingFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 </navigation>

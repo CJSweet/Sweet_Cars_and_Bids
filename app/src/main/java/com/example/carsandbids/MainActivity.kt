@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         //set up bot nav bar with nav_graph, got code from: https://www.youtube.com/watch?v=pT_4rV3gO78
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bot_nav_bar)
         val navController = findNavController(this, R.id.nav_host_fragment)
