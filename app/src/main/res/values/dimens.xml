@@ -7,6 +7,7 @@
     <dimen name="norm_text_size">16sp</dimen>
     <dimen name="space_three">3sp</dimen>
     <dimen name="space_four">4sp</dimen>
+    <dimen name="space_six">6sp</dimen>
     <dimen name="corners">7dp</dimen>
     <dimen name="border_size" format="float">0.5dp</dimen>
     <dimen name="three_hundred">300dp</dimen>

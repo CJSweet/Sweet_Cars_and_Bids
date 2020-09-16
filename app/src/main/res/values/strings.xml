@@ -105,7 +105,7 @@
         \n <li>Once the auction is done, we will send the seller the winning bidder\'s contact information so the remaining details and transactions can be completed.</li>
         \n <li>If the auction closes without a sale, we will communicate with the seller and highest bidder to try to work out a deal.</li></string>
     <string name="no_reserve">NO RESERVE</string>
-    <string name="detailed_seller_info">Seller: %1$s</string>
+    <string name="detailed_seller_info"><u>Seller:</u> %1$s</string>
     <string name="detailed_seller_type">Seller Type: %1$s</string>
     <string name="detailed_title_status">Title Status: %1$s</string>
     <string name="detailed_title_location">Title Location: %1$s</string>
@@ -113,6 +113,53 @@
     <string name="detailed_mods">Modifications: %1$s</string>
     <string name="detailed_caseys_take_title">Casey\'s Take</string>
     <string name="detailed_caseys_take_text">This is a great car! Such a great color and features. It has four wheels, at least one door, contains a steering wheel, and pedals. At this point I am filling the text as to make it seem like there is a lot of talk about my take.</string>
+    <string name="highlights">Highlights</string>
+    <string name="highlights_descript"><i>THIS</i>....is a really neat little car:
+        \n\t <li>It has a steering wheel</li>
+        \n\t <li>It has seats</li>
+        \n\t <li>It runs on a motor</li>
+        \n\t <li>It is also has been painted in a particular color</li></string>
+    <string name="equipment">Equipment</string>
+    <string name="detailed_equip_descript">
+        \t <li>Suspension</li>
+        \n\t <li>Tires</li>
+        \n\t <li>More Equipment</li>
+        \n\t <li>Seats</li>
+        \n\t <li>Equipment</li>
+    </string>
+    <string name="modifications">Modifications</string>
+    <string name="detailed_mods_descript">
+        \t <li>Custom Paint</li>
+        \n\t <li>Aftermarket Wheels</li>
+        \n\t <li>Another one</li>
+        \n\t <li>Racing Seat</li>
+        \n\t <li>Mods Number 5</li>
+    </string>
+    <string name="known_flaws">Known Flaws</string>
+    <string name="detailed_flaws_descript">
+        \t <li>Some paint chips</li>
+        \n\t <li>Seat belt buckle issues</li>
+        \n\t <li>Replaced driver side-skirt</li>
+        \n\t <li>Another Flaw</li>
+        \n\t <li>Flaw Number 5</li></string>
+    <string name="recent_service_history">Recent Service History</string>
+    <string name="detailed_service_descript">
+        \t <li>In 2019 got professional full maintenance check</li>
+        \n\t <li>Recently changed oil and tires</li>
+    </string>
+    <string name="detailed_seller_info_title">Seller Ownership History and Notes</string>
+    <string name="detailed_seller_info_descript">
+        \t <li>The seller has owned this vehicle since 2015</li>
+        \n\t <li>The seller says they are selling the vehicle due to needing space in driveway for a tank</li>
+    </string>
+    <string name="other_items_included">Other Items Included</string>
+    <string name="detailed_other_items_descript">
+        \t <li>Spare keys</li>
+        \n\t <li>Floor Mats</li>
+        \n\t <li>Original Window Sticker</li>
+    </string>
+    <string name="place_bid">Place Bid</string>
+    <string name="videos">Videos</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>

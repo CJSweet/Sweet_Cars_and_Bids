@@ -1,6 +1,10 @@
 package com.example.carsandbids.detailed_listing
 
+import android.os.CountDownTimer
+import android.text.Html
 import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -40,6 +44,12 @@ class DetailedListingViewModel(private val position: Int) : ViewModel() {
     val firstImage : String
 
     val reserveTag : Int
+    val reservePrice : String
+
+    private var _timeToClose = MutableLiveData<String>()
+    val timeToClose : LiveData<String>
+        get() = _timeToClose
+    private val SEVEN_DAYS: Long = 604800000
 
     init {
 
@@ -93,6 +103,49 @@ class DetailedListingViewModel(private val position: Int) : ViewModel() {
         }
         else{
             reserveTag = View.GONE
+        }
+
+        //Get Time left
+        //Calculate Time left
+        // Get the timestamp of when the listing was created
+        val timestamp = carClickedMap.get("timestamp") as Long
+        //add timestamp and 7 days to find the time till auction ends
+        val ending = timestamp.plus(SEVEN_DAYS)
+        //get current time
+        val now = System.currentTimeMillis()
+        //get difference
+        val timeTillEnd = ending - now
+        //countdown from now till end
+        if (timeTillEnd > 0){
+            val timer = object: CountDownTimer(timeTillEnd, 1000){
+                override fun onTick(millisUntilFinished: Long) {
+                    val secondsTill = millisUntilFinished / 1000 % 60
+                    val minutesTill = millisUntilFinished / 1000 / 60 % 60
+                    val hoursTill = millisUntilFinished / 1000 / 60 / 60 % 24
+                    val daysTill = millisUntilFinished / 1000 / 60 / 60 / 24
+                    val timeTill : String = "$daysTill:$hoursTill:$minutesTill:$secondsTill"
+                    // TODO: Make it so if second, minute, or hour are down to single digit,
+                    //  have a leading zero
+                    _timeToClose.value = timeTill
+                }
+
+                override fun onFinish() {
+                    _timeToClose.value = "SOLD"
+                }
+            }
+            timer.start()
+        }
+        else{
+            _timeToClose.value = "SOLD"
+        }
+
+        //reserve price
+        val dbReserve = carClickedMap.get("reserve") as String
+        if (dbReserve.isEmpty()){
+            reservePrice = "000000"
+        }
+        else{
+            reservePrice = "<font color=#C1C1C1>High Bid</font> <font color=#ffffff>$${dbReserve} </font>"
         }
 
     }

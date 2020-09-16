@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#196535</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="off_white">#E6E6E6</color>
-    <color name="bot_nav_color">#D3D3D3</color>
     <color name="slighty_transparent_black">#80000000</color>
+    <color name="lil_transparency_black">#90000000</color>
 </resources>

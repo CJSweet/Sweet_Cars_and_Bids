@@ -15,223 +15,647 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/detailed_image_view"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/detailed_car_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_ten"
-            android:layout_marginTop="@dimen/space_three"
-            android:fontFamily="@font/roboto"
-            android:paddingTop="@dimen/space_three"
-            android:text="@{viewModel.fullCarName}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/subtitle_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailed_image_view"
-            tools:text="2010 Merc Benz G50" />
-
-        <TextView
-            android:id="@+id/detailed_no_reserve_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_ten"
-            android:background="@drawable/no_reserve_background"
-            android:fontFamily="@font/roboto"
-            android:text="@string/no_reserve"
-            android:textColor="@android:color/white"
-            android:textSize="8sp"
-            android:textStyle="bold"
-            android:paddingVertical="@dimen/space_three"
-            android:paddingHorizontal="@dimen/space_four"
-            android:visibility="@{viewModel.reserveTag}"
-            app:layout_constraintBottom_toTopOf="@id/detailed_car_location"
-            app:layout_constraintEnd_toStartOf="@id/detailed_car_subtitle"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailed_car_name_title" />
-
-        <TextView
-            android:id="@+id/detailed_car_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_ten"
-            android:layout_marginVertical="0dp"
-            android:fontFamily="@font/roboto"
-            android:text="@{viewModel.descript}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/norm_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@id/detailed_no_reserve_view"
-            app:layout_constraintTop_toBottomOf="@id/detailed_car_name_title"
-            tools:text="V8-Powered G Wagen" />
-
-        <TextView
-            android:id="@+id/detailed_car_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_ten"
-            android:fontFamily="@font/roboto"
-            android:text="@{viewModel.carLoc}"
-            android:textColor="#FFC1C1C1"
-            android:textSize="@dimen/small_text_size"
-            app:layout_constraintBottom_toTopOf="@id/detailed_info_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailed_car_subtitle"
-            tools:text="US 98625" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailed_info_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_ten"
-            android:background="@drawable/submit_constraint_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailed_car_location">
-
-            <TextView
-                android:id="@+id/detailed_seller_name"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_seller_info"
-                app:layout_constraintEnd_toStartOf="@id/detailed_guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/detailed_seller_type"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_seller_type"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/detailed_guideline"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/detailed_title_status"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_title_status"
-                app:layout_constraintEnd_toStartOf="@id/detailed_guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailed_seller_name" />
-
-            <TextView
-                android:id="@+id/detailed_title_location"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_title_location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/detailed_guideline"
-                app:layout_constraintTop_toBottomOf="@id/detailed_seller_type" />
-
-            <TextView
-                android:id="@+id/detailed_mileage"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/detailed_guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailed_title_status"
-                tools:text="Mileage: 68000" />
-
-            <TextView
-                android:id="@+id/detailed_mods"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detailed_mods"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/detailed_guideline"
-                app:layout_constraintTop_toBottomOf="@id/detailed_title_location" />
+            app:layout_constraintTop_toTopOf="parent">
 
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/detailed_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".5" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/detailed_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailed_car_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="7dp"
+                    android:layout_marginBottom="@dimen/space_ten"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_image_view"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_time_bid_layout">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/detailed_car_name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/space_three"
+                        android:layout_marginTop="@dimen/space_three"
+                        android:fontFamily="@font/roboto"
+                        android:paddingTop="@dimen/space_three"
+                        android:text="@{viewModel.fullCarName}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/subtitle_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="2010 Merc Benz G50" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailed_caseys_take"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_ten"
-            android:background="@drawable/submit_constraint_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailed_info_layout">
+                    <TextView
+                        android:id="@+id/detailed_no_reserve_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_three"
+                        android:background="@drawable/no_reserve_background"
+                        android:fontFamily="@font/roboto"
+                        android:paddingHorizontal="@dimen/space_four"
+                        android:paddingVertical="@dimen/space_three"
+                        android:text="@string/no_reserve"
+                        android:textColor="@android:color/white"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:visibility="@{viewModel.reserveTag}"
+                        app:layout_constraintBottom_toTopOf="@id/detailed_car_location"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_car_subtitle"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_car_name_title" />
 
-            <TextView
-                android:id="@+id/detailed_caseys_take_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_four"
-                android:fontFamily="@font/roboto"
-                android:text="@string/detailed_caseys_take_title"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/detailed_caseys_take_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/detailed_car_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/space_three"
+                        android:layout_marginVertical="0dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{viewModel.descript}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/norm_text_size"
+                        app:layout_constraintBottom_toTopOf="@id/detailed_car_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@id/detailed_no_reserve_view"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_car_name_title"
+                        tools:text="V8-Powered G Wagen" />
 
-            <ImageView
-                android:id="@+id/detailed_caseys_take_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="@dimen/space_four"
-                android:background="@drawable/edit_text_shape"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/detailed_caseys_take_title"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+                    <TextView
+                        android:id="@+id/detailed_car_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/space_three"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{viewModel.carLoc}"
+                        android:textColor="#FFC1C1C1"
+                        android:textSize="@dimen/small_text_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_car_subtitle"
+                        tools:text="US 98625" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_four"
-                android:fontFamily="@font/roboto"
-                android:text="@string/detailed_caseys_take_text"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/norm_text_size"
-                android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/detailed_caseys_take_image"
-                app:layout_constraintTop_toBottomOf="@id/detailed_caseys_take_title" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailed_time_bid_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/detail_time_bid_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_four"
+                    app:layout_constraintBottom_toBottomOf="@id/detailed_place_bid_button"
+                    app:layout_constraintEnd_toStartOf="@id/detailed_place_bid_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/detailed_place_bid_button">
+
+                    <TextView
+                        android:id="@+id/detailed_time_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:drawablePadding="@dimen/space_three"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{viewModel.timeToClose}"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/norm_text_size"
+                        app:drawableStartCompat="@drawable/detailed_timer_icon"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_guideline_bidding"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="5:45:08" />
+
+                    <TextView
+                        android:id="@+id/detailed_current_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@android:color/white"
+                        tools:text="$40000"
+                        android:textSize="@dimen/norm_text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@id/detailed_guideline_bidding"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detailed_comments_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:fontFamily="@font/roboto"
+                        android:text="Comments: 44"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/norm_text_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_guideline_bidding"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_current_price" />
+
+                    <TextView
+                        android:id="@+id/detailed_num_of_bids"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/norm_text_size"
+                        tools:text="Bids 25"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@id/detailed_guideline_bidding"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_time_left" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/detailed_guideline_bidding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent=".5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/detailed_place_bid_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="@drawable/button_background_important"
+                    android:layout_marginEnd="@dimen/space_ten"
+                    android:layout_marginVertical="@dimen/space_ten"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/place_bid"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_info_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/detailed_time_bid_layout"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_car_title_layout" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailed_info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_time_bid_layout">
+
+                    <TextView
+                        android:id="@+id/detailed_seller_name"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_seller_info"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_guideline_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detailed_seller_type"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_seller_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/detailed_guideline_info"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detailed_title_status"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_title_status"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_guideline_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_seller_name" />
+
+                    <TextView
+                        android:id="@+id/detailed_title_location"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_title_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/detailed_guideline_info"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_seller_type" />
+
+                    <TextView
+                        android:id="@+id/detailed_mileage"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/detailed_guideline_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_title_status"
+                        tools:text="Mileage: 68000" />
+
+                    <TextView
+                        android:id="@+id/detailed_mods"
+                        style="@style/textViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_mods"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/detailed_guideline_info"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_title_location" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/detailed_guideline_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent=".5" />
 
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailed_caseys_take"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_ten"
+                    android:background="@drawable/submit_constraint_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_info_layout">
+
+                    <TextView
+                        android:id="@+id/detailed_caseys_take_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_four"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/detailed_caseys_take_title"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/detailed_caseys_take_image"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/detailed_caseys_take_image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginHorizontal="@dimen/space_four"
+                        android:layout_marginVertical="@dimen/space_ten"
+                        android:src="@drawable/casey_profile_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/detailed_caseys_take_title"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/space_four"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/detailed_caseys_take_text"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/norm_text_size"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/detailed_caseys_take_image"
+                        app:layout_constraintTop_toBottomOf="@id/detailed_caseys_take_title" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/detailed_highlights_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/highlights"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_caseys_take" />
+
+                <TextView
+                    android:id="@+id/detailed_highlights_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/highlights_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_highlights_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_highlights_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_equip_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_equip_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/equipment"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_highlights_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_equip_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_equip_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_equip_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_equip_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_mods_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_mods_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/modifications"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_equip_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_mods_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_mods_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_mods_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_mods_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_flaws_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_flaws_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/known_flaws"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_mods_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_flaws_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_flaws_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_flaws_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_flaws_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_service_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_service_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/recent_service_history"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_flaws_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_service_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_service_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_service_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_service_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_other_items_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_other_items_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/other_items_included"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_service_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_other_items_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_other_items_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_other_items_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_other_items_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_seller_info_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_seller_info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/detailed_seller_info_title"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_other_items_descript" />
+
+                <TextView
+                    android:id="@+id/detailed_seller_info_descript"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:lineSpacingExtra="@dimen/space_three"
+                    android:padding="@dimen/space_three"
+                    android:text="@string/detailed_seller_info_descript"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/norm_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_seller_info_title" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:background="@color/off_white"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_seller_info_descript"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/detailed_videos_title"/>
+
+                <TextView
+                    android:id="@+id/detailed_videos_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_ten"
+                    android:text="@string/videos"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_seller_info_descript" />
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/detailed_video_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_ten"
+                    android:layout_marginEnd="@dimen/space_ten"
+                    android:layout_marginTop="@dimen/space_three"
+                    android:layout_marginBottom="@dimen/space_ten"
+                    app:autoPlay="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_videos_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:videoId="4LAGNeE5pjA" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

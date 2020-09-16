@@ -436,24 +436,17 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
      *
      */
     fun checkPhotoPermission() {
-        // version must be greater than Marshmallow
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // if permission denied, request permission
-            if (ContextCompat.checkSelfPermission(
-                    requireActivity().applicationContext,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                == PackageManager.PERMISSION_DENIED
-            ) {
-                val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                requestPermissions(permission, PERMISSION_CODE_PHOTO)
-            }
-            // once permission granted, pick Image
-            else {
-                pickImageFromGallery()
-            }
+        // if permission denied, request permission
+        if (ContextCompat.checkSelfPermission(
+                requireActivity().applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            requestPermissions(permission, PERMISSION_CODE_PHOTO)
         }
-        // phone OS older than Marshmallow
+        // once permission granted, pick Image
         else {
             pickImageFromGallery()
         }

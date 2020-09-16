@@ -2,6 +2,8 @@ package com.example.carsandbids.detailed_listing
 
 import android.app.ActionBar
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +13,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.DetailedListingFragmentBinding
+import kotlinx.android.synthetic.main.main_listing_tile.view.*
 
 class DetailedListingFragment: Fragment() {
 
     private lateinit var detailedViewModel: DetailedListingViewModel
     private lateinit var detailedViewModelFactory: DetailedListingViewModelFactory
+    private lateinit var binding: DetailedListingFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,11 +27,11 @@ class DetailedListingFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DetailedListingFragmentBinding.inflate(inflater)
+        // Bind viewmodel and fragment
+        binding = DetailedListingFragmentBinding.inflate(inflater)
         detailedViewModelFactory = DetailedListingViewModelFactory(DetailedListingFragmentArgs.fromBundle(requireArguments()).position)
         detailedViewModel = ViewModelProvider(this, detailedViewModelFactory).get(DetailedListingViewModel::class.java)
         binding.viewModel = detailedViewModel
-
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.detailedMileage.text = getString(R.string.detailed_mileage, detailedViewModel.mileage)
@@ -42,11 +46,31 @@ class DetailedListingFragment: Fragment() {
 
         binding.detailedTitleLocation.text = getString(R.string.detailed_title_location, detailedViewModel.titleLocation)
 
+        binding.detailedCurrentPrice.text = Html.fromHtml(detailedViewModel.reservePrice, Html.FROM_HTML_MODE_LEGACY)
+
+        //Set image
+        setImage()
+
+        //Set time-price-bids-comments layout
+        setTPBC()
+
+        return binding.root
+    }
+
+    private fun setImage() {
         val requestOptions: RequestOptions = RequestOptions().placeholder(R.drawable.image_loading_icon1)
             .error(R.drawable.error_image_icon).centerCrop()
 
         Glide.with(this).load(detailedViewModel.firstImage).apply(requestOptions).into(binding.detailedImageView)
+    }
 
-        return binding.root
+    private fun setTPBC() {
+        // Set # of bids (TEMPORARY FOR NOW)
+        // TODO: Keep track of how many bids have been placed and comments have been made
+        val bids = "<font color=#C1C1C1>Bids</font> <font color=#ffffff>8</font>"
+        binding.detailedNumOfBids.text = Html.fromHtml(bids, Html.FROM_HTML_MODE_LEGACY)
+
+        val comments = "<font color=#C1C1C1>Comments</font> <font color=#ffffff>44</font>"
+        binding.detailedCommentsNumber.text = Html.fromHtml(comments, Html.FROM_HTML_MODE_LEGACY)
     }
 }
