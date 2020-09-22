@@ -31,7 +31,7 @@ class DetailedListingViewModel(private val position: Int) : ViewModel() {
 
     val mileage : String
 
-    val mods : String
+    val stock : String
 
     val sellerType : String
 
@@ -41,10 +41,10 @@ class DetailedListingViewModel(private val position: Int) : ViewModel() {
 
     val titleLocation : String
 
-    val firstImage : String
-
     val reserveTag : Int
     val reservePrice : String
+
+    val imageArray : ArrayList<String>
 
     private var _timeToClose = MutableLiveData<String>()
     val timeToClose : LiveData<String>
@@ -65,37 +65,35 @@ class DetailedListingViewModel(private val position: Int) : ViewModel() {
 
         carLoc = carDetailsMap["location"].toString()
 
-        mileage = carDetailsMap["mileage"].toString()
+        mileage = "<u>Mileage</u>: ${carDetailsMap["mileage"].toString()}"
 
         if (carDetailsMap["modifications"].toString().isEmpty()){
-            mods = "No"
+            stock = "<u>Completely Stock</u>: Yes"
         }
         else{
-            mods = "Yes"
+            stock = "<u>Completely Stock</u>: No"
         }
 
         // get your info map and get all info
         yourInfoMap = carClickedMap["yourInfo"] as Map<*, *>
 
-        sellerName = yourInfoMap["name"].toString()
+        sellerName = "<u>Seller</u>: ${yourInfoMap["name"].toString()}"
         if (yourInfoMap["dealerName"].toString().isEmpty()){
-            sellerType = "Private Seller"
+            sellerType = "<u>Seller Type</u>: Private Seller"
         }
         else{
-            sellerType = "Dealer"
+            sellerType = "<u>Seller Type</u>: Dealer"
         }
 
         // get title info map and get all info
         titleInfoMap = carClickedMap["titleInfo"] as Map<*, *>
 
-        titleStatus = titleInfoMap["titleStatus"].toString()
+        titleStatus = "<u>Title Status</u>: ${titleInfoMap["titleStatus"].toString()}"
 
-        titleLocation = titleInfoMap["titleLocation"].toString()
+        titleLocation = "<u>Title Location</u> ${titleInfoMap["titleLocation"].toString()}"
 
-        //get the first image
-        //get first image, using Glide
-        val imageArray = carClickedMap["imgURls"] as ArrayList<*>
-        firstImage = imageArray[0].toString()
+        //get image array, using Glide
+        imageArray = carClickedMap["imgURls"] as ArrayList<String>
 
         // see if there is a reserve
         if (carClickedMap["reserve"].toString().isEmpty()){

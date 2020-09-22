@@ -1,24 +1,22 @@
 package com.example.carsandbids.detailed_listing
 
-import android.app.ActionBar
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.carsandbids.R
 import com.example.carsandbids.databinding.DetailedListingFragmentBinding
-import kotlinx.android.synthetic.main.main_listing_tile.view.*
 
 class DetailedListingFragment: Fragment() {
 
     private lateinit var detailedViewModel: DetailedListingViewModel
-    private lateinit var detailedViewModelFactory: DetailedListingViewModelFactory
     private lateinit var binding: DetailedListingFragmentBinding
 
     override fun onCreateView(
@@ -27,44 +25,48 @@ class DetailedListingFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Bind viewmodel and fragment
+        // Bind ViewModel and fragment
         binding = DetailedListingFragmentBinding.inflate(inflater)
-        detailedViewModelFactory = DetailedListingViewModelFactory(DetailedListingFragmentArgs.fromBundle(requireArguments()).position)
+        val detailedViewModelFactory = DetailedListingViewModelFactory(DetailedListingFragmentArgs.fromBundle(requireArguments()).position)
         detailedViewModel = ViewModelProvider(this, detailedViewModelFactory).get(DetailedListingViewModel::class.java)
         binding.viewModel = detailedViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.detailedMileage.text = getString(R.string.detailed_mileage, detailedViewModel.mileage)
+        // Set toolbar
+        val toolbar : Toolbar = binding.detailedToolbar as Toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Cars & Bids"
+        toolbar.setNavigationIcon(R.drawable.back_up_arrow)
+        toolbar.setNavigationOnClickListener {
+            val action = DetailedListingFragmentDirections.actionDetailedListingFragmentToMainFragment()
+            NavHostFragment.findNavController(this).navigate(action)
+        }
 
-        binding.detailedMods.text = getString(R.string.detailed_mods, detailedViewModel.mods)
+        // Set all dynamic textViews
+        setTextViews()
 
-        binding.detailedSellerName.text = getString(R.string.detailed_seller_info, detailedViewModel.sellerName)
-
-        binding.detailedSellerType.text = getString(R.string.detailed_seller_type, detailedViewModel.sellerType)
-
-        binding.detailedTitleStatus.text = getString(R.string.detailed_title_status, detailedViewModel.titleStatus)
-
-        binding.detailedTitleLocation.text = getString(R.string.detailed_title_location, detailedViewModel.titleLocation)
-
-        binding.detailedCurrentPrice.text = Html.fromHtml(detailedViewModel.reservePrice, Html.FROM_HTML_MODE_LEGACY)
-
-        //Set image
-        setImage()
-
-        //Set time-price-bids-comments layout
-        setTPBC()
+        // Set image
+        setImageRecycler()
 
         return binding.root
     }
 
-    private fun setImage() {
-        val requestOptions: RequestOptions = RequestOptions().placeholder(R.drawable.image_loading_icon1)
-            .error(R.drawable.error_image_icon).centerCrop()
+    private fun setTextViews() {
 
-        Glide.with(this).load(detailedViewModel.firstImage).apply(requestOptions).into(binding.detailedImageView)
-    }
+        binding.detailedMileage.text = Html.fromHtml(detailedViewModel.mileage, Html.FROM_HTML_MODE_LEGACY)
 
-    private fun setTPBC() {
+        binding.detailedMods.text = Html.fromHtml(detailedViewModel.stock, Html.FROM_HTML_MODE_LEGACY)
+
+        binding.detailedSellerName.text = Html.fromHtml(detailedViewModel.sellerName, Html.FROM_HTML_MODE_LEGACY)
+
+        binding.detailedSellerType.text = Html.fromHtml(detailedViewModel.sellerType, Html.FROM_HTML_MODE_LEGACY)
+
+        binding.detailedTitleStatus.text = Html.fromHtml(detailedViewModel.titleStatus, Html.FROM_HTML_MODE_LEGACY)
+
+        binding.detailedTitleLocation.text = Html.fromHtml(detailedViewModel.titleLocation, Html.FROM_HTML_MODE_LEGACY)
+
+        binding.detailedCurrentPrice.text = Html.fromHtml(detailedViewModel.reservePrice, Html.FROM_HTML_MODE_LEGACY)
+
         // Set # of bids (TEMPORARY FOR NOW)
         // TODO: Keep track of how many bids have been placed and comments have been made
         val bids = "<font color=#C1C1C1>Bids</font> <font color=#ffffff>8</font>"
@@ -73,4 +75,14 @@ class DetailedListingFragment: Fragment() {
         val comments = "<font color=#C1C1C1>Comments</font> <font color=#ffffff>44</font>"
         binding.detailedCommentsNumber.text = Html.fromHtml(comments, Html.FROM_HTML_MODE_LEGACY)
     }
+
+    private fun setImageRecycler() {
+        // set adapter
+        val adapter = ImageAdapter(detailedViewModel.imageArray)
+        // set SnapHelper to snap to each photo
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.detailedImageRecycler)
+        binding.detailedImageRecycler.adapter = adapter
+    }
+
 }

@@ -1,10 +1,17 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="toolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="background">@color/colorPrimary</item>
+        <item name="elevation">@dimen/space_four</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="textViewStyle" parent="Widget.AppCompat.TextView">

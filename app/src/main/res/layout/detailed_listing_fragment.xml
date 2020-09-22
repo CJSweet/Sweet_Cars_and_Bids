@@ -15,23 +15,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/detailed_toolbar"
+            layout="@layout/toolbar"/>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/detailed_toolbar">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/detailed_image_view"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detailed_image_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +50,7 @@
                     android:layout_marginBottom="@dimen/space_ten"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/detailed_image_view"
+                    app:layout_constraintTop_toBottomOf="@id/detailed_image_recycler"
                     app:layout_constraintBottom_toTopOf="@id/detailed_time_bid_layout">
 
 

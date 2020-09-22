@@ -1,6 +1,5 @@
 package com.example.carsandbids
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
@@ -8,16 +7,9 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.navigation.Navigation
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.carsandbids.mainpage.MainFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

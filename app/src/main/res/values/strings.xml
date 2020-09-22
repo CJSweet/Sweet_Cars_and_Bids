@@ -160,6 +160,7 @@
     </string>
     <string name="place_bid">Place Bid</string>
     <string name="videos">Videos</string>
+    <string name="picture">Picture</string>
 
     <string-array name="title_status_array">
         <item>Choose</item>

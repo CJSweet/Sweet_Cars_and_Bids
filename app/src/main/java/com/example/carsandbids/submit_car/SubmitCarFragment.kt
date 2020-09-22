@@ -25,6 +25,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.MimeTypeMap
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -88,6 +90,11 @@ class SubmitCarFragment : Fragment(), PhotoAdapter.OnDeletePhotoListener,
 
         // Inflate binding with this fragment
         binding = SubmitCarBinding.inflate(inflater)
+
+        val toolbar : Toolbar? = binding.submitToolbar as Toolbar
+
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Cars & Bids"
 
         // get viewmodel
         submitCarViewModel = ViewModelProvider(this).get(SubmitCarViewModel::class.java)
